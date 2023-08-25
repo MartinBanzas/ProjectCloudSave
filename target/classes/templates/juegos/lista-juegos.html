@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <title>Lista de juegos</title>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h3>Lista de juegos</h3>
+    <hr>
+
+    <a th:href="@{/juegos/formAdd}"
+       class="btn btn-primary btn-sm mb-3">Añadir Juego</a>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+        <tr>
+            <th></th>
+            <th>Nombre</th>
+            <th>Sistema</th>
+            <th>Directorio</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="tempJuego : ${juegos}">
+            <td> <img th:if="${tempJuego.id != null}"
+                      th:src="@{/juegos/files/img/{id}(id=${tempJuego.id})}"
+                      alt="Imagen del juego"
+                      onerror="this.onerror=null; this.src='@{/images/placeholder.jpg}';"
+            />
+                <img th:unless="${tempJuego.id != null}"
+                     src="@{/images/placeholder.jpg}"
+                     alt="Imagen del juego"
+                /></td>
+            <td>
+                    <a th:href="@{/juegos/partidas/{id}(id=${tempJuego.id})}" th:text="${tempJuego.Name}" ></a>
+                </td>
+            <td th:text="${tempJuego.Sistema}" />
+            <td th:text="${tempJuego.Directorio}" />
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

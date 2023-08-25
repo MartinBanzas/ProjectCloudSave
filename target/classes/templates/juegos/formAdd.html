@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+  <title>Añadir nuevo juego</title>
+</head>
+<body>
+<div class="container">
+  <h3>Lista de juegos</h3>
+  <hr>
+  <p class="h4 mb-4">Añadir nuevo juego</p>
+  <form action="#" th:action="@{/juegos/save}"
+                   th:object="${juegos}" method="POST">
+
+  <input type="text" th:field="*{name}"
+  class="form-control mb-4 w-25" placeholder="Nombre del juego" required>
+  <input type="text" th:field="*{sistema}"
+         class="form-control mb-4 w-25" placeholder="Sistema" required>
+  <input type="text" th:field="*{directorio}"
+         class="form-control mb-4 w-25" placeholder="Directorio" required>
+    <button type="submit" class="btn btn-info col-2">Guardar</button>
+    <button id="galeria" class="btn btn-info col-2">Añadir carátula</button>
+    <script>
+
+
+  // Obtener referencia al botón "Añadir carátula" por su id
+  const botonGaleria = document.getElementById("galeria");
+
+  // Agregar event listener al botón "Añadir carátula"
+  botonGaleria.addEventListener("click", function(event) {
+    event.preventDefault(); // Evitar el envío del formulario
+        import SGDB from "steamgriddb";
+    const client = new SGDB('bf17005eda7af4ff3201de2fa5003436');
+    // Código que se ejecutará cuando se haga clic en el botón "Añadir carátula"
+  alert("¡Botón 'Añadir carátula' clickeado!");
+  });
+</script>
+  </form>
+  <hr>
+  <a th:href="@{/juegos/lista}">Volver a la lista</a>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
