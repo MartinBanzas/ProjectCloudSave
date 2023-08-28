@@ -68,9 +68,21 @@ public class FileController {
         return "juegos/lista-juegos";
     }
 
+    @PostMapping("/files/delete/{id}")
+    @Transactional
+    public String deleteFile(@PathVariable int id) {
 
-    //O requestparam?
-    @GetMapping("/files/{id}")
+        Partida partida = partidaService.findById(id);
+        Resource file = storageService.load(partida.getRutaarchivo());
+        storageService.delete(file.getFilename());
+        partidaService.deleteById(id);
+
+return "redirect:/juegos/lista";
+
+    }
+
+
+        @GetMapping("/files/{id}")
     public ResponseEntity<Resource> getFile(@PathVariable int id) {
 
         Partida partida = partidaService.findById(id);
