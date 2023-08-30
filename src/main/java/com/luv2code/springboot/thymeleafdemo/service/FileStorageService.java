@@ -12,9 +12,11 @@ public interface FileStorageService {
 
     public void init();
 
-    public void save(MultipartFile file);
+    public void save(MultipartFile file, String uniqueFileName);
 
     public Resource load(String filename);
+
+    public Resource loadImg(String filename);
 
     public boolean delete(String filename);
 

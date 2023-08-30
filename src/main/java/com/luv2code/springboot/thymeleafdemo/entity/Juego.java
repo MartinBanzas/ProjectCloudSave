@@ -27,6 +27,9 @@ public class Juego {
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "juego", cascade={CascadeType.ALL})
     private List<Partida> listaPartidas;
 
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "juego", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Img img;
+
 
 //private LocalDateTime ultimaActu;
 

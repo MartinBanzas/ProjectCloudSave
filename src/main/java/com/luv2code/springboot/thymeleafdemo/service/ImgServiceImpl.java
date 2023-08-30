@@ -32,7 +32,6 @@ public class ImgServiceImpl implements  ImgService {
         String fileName= StringUtils.cleanPath(file.getOriginalFilename());
         Img img = new Img(fileName, file.getContentType(), file.getBytes());
         img.setJuego(juego);
-        System.out.println(juego.getName()+ juego.getId());
         return imgRepository.save(img);
     }
 

@@ -5,16 +5,22 @@ import com.luv2code.springboot.thymeleafdemo.entity.Partida;
 import com.luv2code.springboot.thymeleafdemo.service.FileStorageService;
 import com.luv2code.springboot.thymeleafdemo.service.JuegoService;
 import com.luv2code.springboot.thymeleafdemo.service.PartidaService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Controller
 @RequestMapping("/juegos")
 public class JuegoController {
+
 
 	@Autowired
 	public JuegoController (JuegoService juegoService, PartidaService partidaService, FileStorageService storageService) {
@@ -69,6 +75,25 @@ public class JuegoController {
 
 
 
+	//Aquí se gestiona el borrado de Juegos de la lista, se borran tanto sus tablas SQL de su entidad como de la entidad Partidas y los propios ficheros.
+	@PostMapping("/delete/{id}")
+	@Transactional
+	public String deleteJuego(@PathVariable int id) {
+
+
+		Juego juego = juegoService.findById(id);
+
+		List <Partida> partidas = juego.getListaPartidas();
+
+
+			for (Partida partida : partidas) {
+				// Hay que recuperar la lista de ficheros, su directorio y llamar al servicio que lo borra pasando el nombre
+				storageService.delete((partida.getRutaarchivo()));
+			}
+			juegoService.deleteById(id);
+
+			return "redirect:/juegos/lista";
+	}
 }
 
 

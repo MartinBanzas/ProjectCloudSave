@@ -19,10 +19,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 
 @Controller
 @RequestMapping("/juegos")
 public class FileController {
+
+    Path root = Paths.get("./uploads");
 
     FileStorageService storageService;
 
@@ -46,27 +52,50 @@ public class FileController {
 
     @PostMapping("/files/upload")
     @Transactional
-    public String uploadFile(Model model,@RequestParam("id") int id, @RequestParam("descripcion") String descripcion, @RequestParam("file")MultipartFile file) {
+    public String uploadFile(Model model,
+                             @RequestParam("id") int id,
+                             @RequestParam("descripcion") String descripcion,
+                             @RequestParam("file") MultipartFile file) {
         String message = "";
 
         Partida newPartida = new Partida();
         newPartida.setDescripcion(descripcion);
         Juego theGame = juegoService.findById(id);
-        newPartida.setRutaarchivo(file.getOriginalFilename());
+        String originalFileName = file.getOriginalFilename();
+        String uniqueFileName = generateUniqueFileName(originalFileName);
+
+        newPartida.setRutaarchivo(uniqueFileName);
         newPartida.setJuego(theGame);
         partidaService.save(newPartida);
 
         try {
-            storageService.save(file);
+            storageService.save(file, uniqueFileName);
 
-            message = "Se ha guardado el fichero con éxito: " + file.getOriginalFilename();
+            message = "Se ha guardado el fichero con éxito: " + uniqueFileName;
             model.addAttribute("message", message);
         } catch (Exception e) {
-            message = "No se ha podido guardar el fichero: " + file.getOriginalFilename() + ". Error: " + e.getMessage();
+            message = "No se ha podido guardar el fichero: " + uniqueFileName + ". Error: " + e.getMessage();
             model.addAttribute("message", message);
         }
-        return "juegos/lista-juegos";
+        return "redirect:/juegos/lista";
     }
+
+    private String generateUniqueFileName(String originalFileName) {
+
+        String baseName = originalFileName.substring(0, originalFileName.lastIndexOf('.'));
+        String extension = originalFileName.substring(originalFileName.lastIndexOf('.') + 1);
+        String uniqueFileName = baseName + "." + extension;
+
+        int count = 1;
+        while (Files.exists(this.root.resolve(uniqueFileName))) {
+            uniqueFileName = baseName + "(" + count + ")." + extension;
+            count++;
+        }
+
+        return uniqueFileName;
+    }
+
+
 
     @PostMapping("/files/delete/{id}")
     @Transactional
