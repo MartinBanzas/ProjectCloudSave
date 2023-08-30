@@ -17,14 +17,14 @@ import java.util.stream.Stream;
 @Service
 public class FileStorageServiceImpl implements  FileStorageService{
 
-    private final Path rutaImg=Paths.get("./img");
+
     private final Path root = Paths.get("./uploads");
     @Override
     public void init() {
 
         try {
             Files.createDirectories(root);
-            Files.createDirectories(rutaImg);
+
         } catch (IOException e) {
             throw new RuntimeException("No se ha podido inicializar el directorio");
         }
@@ -56,21 +56,6 @@ public class FileStorageServiceImpl implements  FileStorageService{
       } catch (MalformedURLException e) {
           throw new RuntimeException("Error: " + e.getMessage());
       }
-    }
-
-    @Override
-    public Resource loadImg(String filename) {
-        try {
-            Path file = this.rutaImg.resolve(filename);
-            Resource resource = new UrlResource(file.toUri());
-            if (resource.exists() || resource.isReadable()) {
-                return resource;
-            } else {
-                throw new RuntimeException("No se ha podido leer el archivo");
-            }
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("Error: " + e.getMessage());
-        }
     }
 
     @Override

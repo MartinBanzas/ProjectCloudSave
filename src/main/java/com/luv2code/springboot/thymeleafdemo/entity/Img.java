@@ -44,7 +44,7 @@ public class Img {
     public Img() {
     }
 
-    public Img(String name, String type, byte[] data) {
+    public Img(String name, String type) {
         this.name = name;
         this.type = type;
         this.data = data;

@@ -16,8 +16,6 @@ public interface FileStorageService {
 
     public Resource load(String filename);
 
-    public Resource loadImg(String filename);
-
     public boolean delete(String filename);
 
     public void deleteAll();

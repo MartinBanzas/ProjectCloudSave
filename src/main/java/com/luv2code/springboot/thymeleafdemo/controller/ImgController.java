@@ -1,12 +1,15 @@
 package com.luv2code.springboot.thymeleafdemo.controller;
 
 import com.luv2code.springboot.thymeleafdemo.entity.Img;
+import com.luv2code.springboot.thymeleafdemo.entity.Juego;
 import com.luv2code.springboot.thymeleafdemo.response.ResponseFile;
 import com.luv2code.springboot.thymeleafdemo.response.ResponseMessage;
 import com.luv2code.springboot.thymeleafdemo.service.ImgService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -54,12 +57,24 @@ public class ImgController {
         return ResponseEntity.status(HttpStatus.OK).body(files);
     }
 
-    @GetMapping("/files/img/{id}")
+ /*   @GetMapping("/files/img/{id}")
     public ResponseEntity<byte[]> getFile(@PathVariable int id) {
         Img img = imgService.findById(id);
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + img.getName() + "\"")
                 .body(img.getData());
+    }*/
+
+    @GetMapping("/files/img/{id}")
+    public ResponseEntity<Resource> getImg(@PathVariable int id) {
+
+    Img img = imgService.findById(id);
+
+        Resource file = imgService.load(img.getName());
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG)  // Cambia el tipo de contenido a imagen/png
+                .body(file);
     }
 }
