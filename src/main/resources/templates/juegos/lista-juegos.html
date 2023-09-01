@@ -1,122 +1,111 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Lista de juegos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/landing.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
-    <style>
-
-        body {
-            background: rgb(224,224,224);
-            background: linear-gradient(90deg, rgba(224,224,224,1) 0%, rgba(134,134,134,1) 35%, rgba(75,75,75,1) 100%);
-            padding: 5px;
-            font-family: 'Roboto', sans-serif;
-        }
-
-        a {
-            text-decoration: none !important;
-        }
-
-        .container {
-            margin-top: 10px;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: white;
-
-        }
-
-        .btn-add-game {
-            height: 50px;
-
-
-        }
-
-        .list_cover {
-            height: 100px;
-            width: auto;
-        }
-
-    </style>
-
 </head>
 
 <body>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 
-<div class="container">
-
-    <div class="row">
-        <div class="col-9">
-            <h1>Lista de juegos</h1>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="#!">Martin's Library</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Acciones</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" th:href="@{/juegos/formAdd}">Añadir Juego</a></li>                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#!">Popular Items</a></li>
+                        <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <button class="btn btn-outline-dark" type="submit">
+                    <i class="bi-cart-fill me-1"></i>
+                    Salir
+                    <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                </button>
+            </form>
         </div>
+    </div>
+</nav>
+
+<header class="bg-dark py-1">
+<div class="container  px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+        <h1 class="display-4 fw-bolder">Tu Biblioteca de juegos</h1>
         <div class="col-3">
-            <a th:href="@{/juegos/formAdd}"
-               class="btn btn-primary btn-add-game">Agregar un juego</a>
         </div>
     </div>
 </div>
+</header>
+
 <div class="container">
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Portada</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Sistema</th>
-            <th scope="col">Acciones</th>
+    <div class="row">
+        <!-- Iterar a través de los juegos -->
+        <div th:each="tempJuego : ${juegos}" class="col-lg-3 col-md-4 col-sm-6 game-card">
+            <div class="card">
+                <!-- Imagen del juego -->
+                <img th:if="${tempJuego.id != null}" th:src="@{/juegos/img/{id}(id=${tempJuego.id})}"
+                     alt="Imagen del juego" onerror="this.onerror=null; this.src='@{/images/placeholder.jpg}';"
+                     class="card-img-top game-img img-fluid" />
+                <img th:unless="${tempJuego.id != null}" src="@{/images/placeholder.jpg}" alt="Imagen del juego"
+                     class="card-img-top game-img img-fluid" />
 
-        </tr>
-        </thead>
-
-        <tbody>
-        <tr th:each="tempJuego : ${juegos}">
-            <td> <img th:if="${tempJuego.id != null}"
-                      th:src="@{/juegos/img/{id}(id=${tempJuego.id})}"
-                      alt="Imagen del juego"
-                      onerror="this.onerror=null; this.src='@{/images/placeholder.jpg}';" class="list_cover"/>
-                <img th:unless="${tempJuego.id != null}"
-                     src="@{/images/placeholder.jpg}"
-                     alt="Imagen del juego"/>
-            </td>
-            <td>
-                <a th:href="@{/juegos/partidas/{id}(id=${tempJuego.id},name=${tempJuego.Name})}" th:text="${tempJuego.Name}"></a>
-                </td>
-            <td th:text="${tempJuego.Sistema}" />
-            <td>
-                <p>
-                    <a href="#" name="game_edit" alt="Editar">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"></path>
-                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"></path>
-                        </svg>
-                    </a>
-
-                <form th:action="@{/juegos/delete/{id}(id=${tempJuego.id})}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas borrar este juego y todos sus datos asociados?');">
-                    <button type="submit" name="game_delete" alt="Borrar" class="btn btn-link" style="display: inline-block;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor" class="bi bi-trash3" viewBox="0 0 32 32">
-                            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
-                        </svg>
-                    </button>
-                </form>
-
-                <a href="#" name="game_sync" alt="Sincronizar">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
-                            <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
-                            <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
-                        </svg>
-                    </a>
-                </p>
-            </td>
-
-        </tr>
-        </tbody>
-    </table>
-
+                <div class="card-body">
+                    <!-- Nombre del juego -->
+                    <a th:href="@{/juegos/partidas/{id}(id=${tempJuego.id},name=${tempJuego.Name})}" th:text="${tempJuego.Name}">
+                        <h5 th:text="${tempJuego.Name}" class="card-title game-title"></h5></a>
+                    <!-- Sistema del juego -->
+                    <p th:text="${tempJuego.Sistema}" class="card-text game-details"></p>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-6">
+                            <!-- Botón para editar -->
+                            <a href="#" name="game_edit" alt="Editar" class="btn  btn-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <path
+                                            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"></path>
+                                    <path fill-rule="evenodd"
+                                          d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"></path>
+                                </svg>
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <!-- Formulario para eliminar -->
+                            <form th:action="@{/juegos/delete/{id}(id=${tempJuego.id})}" method="post"
+                                  onsubmit="return confirm('¿Estás seguro de que deseas borrar este juego y todos sus datos asociados?');">
+                                <button type="submit" name="game_delete" alt="Borrar"
+                                        class="btn btn-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                         fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                        <path
+                                                d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"></path>
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fin de la iteración -->
+    </div>
 </div>
+
 </body>
+
 </html>
