@@ -64,7 +64,7 @@
                         <path fill-rule="evenodd" d="M8 0a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 4.095 0 5.555 0 7.318 0 9.366 1.708 11 3.781 11H7.5V5.5a.5.5 0 0 1 1 0V11h4.188C14.502 11 16 9.57 16 7.773c0-1.636-1.242-2.969-2.834-3.194C12.923 1.999 10.69 0 8 0zm-.354 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V11h-1v3.293l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
                     </svg>
                 </a>
-                <form th:action="@{/juegos/files/delete/{id}(id=${tempPartida.id})}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas borrar este elemento?');">
+                <form th:action="@{/juegos/files/delete/{id}(id=${tempPartida.id})}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas borrar esta partida?');">
                     <button type="submit" name="game_delete" alt="Borrar" class="btn btn-link" style="display: inline-block;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor" class="bi bi-trash3" viewBox="0 0 32 32">
                         <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
@@ -83,7 +83,7 @@
 
 <form id="imgForm"
       method="post"
-      th:action="@{/juegos/files/uploadImg(id=${id})}"
+      th:action="@{/juegos/img/uploadImg(id=${id})}"
       enctype="multipart/form-data">
     <!-- Campo para subir la carátula -->
     <div class="mb-3">

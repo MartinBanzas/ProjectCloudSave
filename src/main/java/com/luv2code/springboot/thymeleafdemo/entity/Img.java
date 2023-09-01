@@ -28,11 +28,6 @@ public class Img {
     @Column(name="type")
     private String type;
 
-    @Lob
-    @Column(name = "data", columnDefinition = "MEDIUMBLOB")
-    private byte[] data;
-
-
     public Juego getJuego() {
         return juego;
     }
@@ -44,10 +39,9 @@ public class Img {
     public Img() {
     }
 
-    public Img(String name, String type, byte[] data) {
+    public Img(String name, String type) {
         this.name = name;
         this.type = type;
-        this.data = data;
     }
 
     public int getId() {
@@ -83,12 +77,5 @@ public class Img {
         this.type = type;
     }
 
-    public byte[] getData() {
-        return data;
-    }
-
-    public void setData(byte[] data) {
-        this.data = data;
-    }
 
 }

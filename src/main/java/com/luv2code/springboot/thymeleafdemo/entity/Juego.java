@@ -27,8 +27,10 @@ public class Juego {
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "juego", cascade={CascadeType.ALL})
     private List<Partida> listaPartidas;
 
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "juego", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Img img;
 
-//private LocalDateTime ultimaActu;
+    //private LocalDateTime ultimaActu;
 
     public Juego() {}
 
@@ -100,5 +102,12 @@ public class Juego {
         this.Directorio = directorio;
     }
 
+    public Img getImg() {
+        return img;
+    }
+
+    public void setImg(Img img) {
+        this.img = img;
+    }
 
 }
