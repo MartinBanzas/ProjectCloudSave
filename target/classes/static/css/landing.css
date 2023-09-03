@@ -1,0 +1,47 @@
+
+        body {
+            background: rgb(224,224,224);
+            background: linear-gradient(90deg, rgba(224,224,224,1) 0%, rgba(134,134,134,1) 35%, rgba(75,75,75,1) 100%);
+            padding: 5px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        a {
+            text-decoration: none !important;
+        }
+
+        .container {
+            margin-top: 10px;
+        }
+
+        .game-card {
+            margin-bottom: 20px;
+        }
+
+        .game-img {
+            height: 360px;
+            object-fit: cover;
+
+        }
+
+        .game-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .game-details {
+            font-size: 1rem;
+            color: #777;
+        }
+
+        .game-price {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #007bff;
+            margin-top: 10px;
+        }
+
+        .btn-add-game {
+            margin-top: 20px;
+        }
