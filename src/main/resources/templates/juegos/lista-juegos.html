@@ -54,7 +54,7 @@
 <div class="container">
     <div class="row">
         <!-- Iterar a través de los juegos -->
-        <div th:each="tempJuego : ${juegos}" class="col-lg-3 col-md-4 col-sm-6 game-card">
+        <div th:each="tempJuego : ${juegos}" class="col-2 game-card">
             <div class="card">
                 <!-- Imagen del juego -->
                 <img th:if="${tempJuego.id != null}" th:src="@{/juegos/img/{id}(id=${tempJuego.id})}"
@@ -74,7 +74,7 @@
                     <div class="row">
                         <div class="col-6">
                             <!-- Botón para editar -->
-                            <a href="#" name="game_edit" alt="Editar" class="btn  btn-sm">
+                            <a href="#" name="game_edit" alt="Editar" class="btn btn-sm" onclick="openEditModal()">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                      class="bi bi-pencil-square" viewBox="0 0 16 16">
                                     <path
@@ -84,8 +84,27 @@
                                 </svg>
                             </a>
                         </div>
+
+                        <!-- El modal -->
+                        <div id="editModal" class="modal">
+                            <div class="modal-content">
+                                <!-- Contenido del formulario de edición -->
+                                <form th:action="@{/juegos/update/{id}(id=${tempJuego.id})}"
+                                      th:object="${tempJuego}" method="post">
+                                    <!-- Tus campos de formulario aquí -->
+                                    <input type="text" th:field="*{name}" th:name="${tempJuego.name}" placeholder="Nuevo nombre">
+                                    <input type="text" th:field="*{sistema}" th:name="${tempJuego.sistema}" placeholder="Sistema">
+                                    <input type="text" th:field="*{directorio}" th:name="${tempJuego.directorio}" placeholder="Nuevo directorio">
+                                    <button type="submit">Guardar cambios</button>
+                                    <button type="button" onclick="closeEditModal()">Cancelar</button>
+                                </form>
+
+                            </div>
+                        </div>
+
+                        <!-- Formulario para eliminar -->
                         <div class="col-6">
-                            <!-- Formulario para eliminar -->
+
                             <form th:action="@{/juegos/delete/{id}(id=${tempJuego.id})}" method="post"
                                   onsubmit="return confirm('¿Estás seguro de que deseas borrar este juego y todos sus datos asociados?');">
                                 <button type="submit" name="game_delete" alt="Borrar"
@@ -106,6 +125,19 @@
     </div>
 </div>
 
+<script>
+    // Función para abrir el modal de edición
+    function openEditModal() {
+        var editModal = document.getElementById("editModal");
+        editModal.style.display = "block";
+    }
+
+    // Función para cerrar el modal de edición
+    function closeEditModal() {
+        var editModal = document.getElementById("editModal");
+        editModal.style.display = "none";
+    }
+</script>
 </body>
 
 </html>

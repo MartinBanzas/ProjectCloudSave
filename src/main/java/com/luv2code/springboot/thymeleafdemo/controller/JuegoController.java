@@ -30,10 +30,10 @@ public class JuegoController {
 	public String listJuegos(Model theModel) {
 
 		List<Juego> theGames = juegoService.findAll();
-
+		Juego tempJuego = new Juego();
 		// add to the spring model
 		theModel.addAttribute("juegos", theGames);
-
+		theModel.addAttribute("tempJuego", tempJuego); // Agregar tempJu
 		return "juegos/lista-juegos";
 	}
 
@@ -57,6 +57,19 @@ public class JuegoController {
 
 	@PostMapping("/save")
 	public String saveJuego(@ModelAttribute("juegos") Juego theGame) {
+		juegoService.save(theGame);
+
+		return "redirect:/juegos/lista";
+	}
+
+	@PostMapping("update/{id}")
+	@Transactional
+	public String updateJuego(@PathVariable("id") int id, @RequestParam("name") String name, @RequestParam("sistema") String sistema, @RequestParam("directorio") String directorio) {
+		Juego theGame = juegoService.findById(id);
+
+		theGame.setName(name);
+		theGame.setDirectorio(directorio);
+		theGame.setSistema(sistema);
 		juegoService.save(theGame);
 
 		return "redirect:/juegos/lista";

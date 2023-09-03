@@ -34,8 +34,8 @@ public class Juego {
 
     public Juego() {}
 
-    public Juego(String nombre, String sistema, String directorio) {
-        this.name = nombre;
+    public Juego(String name, String sistema, String directorio) {
+        this.name = name;
         this.Sistema = sistema;
         this.Directorio = directorio;
     }
