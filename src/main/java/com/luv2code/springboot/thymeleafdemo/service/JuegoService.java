@@ -14,4 +14,6 @@ public interface JuegoService {
     void save(Juego theGame);
 
     void deleteById(int theId);
+
+    List<Juego> findByNombreContainingIgnoreCase(String nombre);
 }

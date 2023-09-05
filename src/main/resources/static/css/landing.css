@@ -82,3 +82,24 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+
+    .btn-container {
+        margin-top: 20px;
+    }
+
+
+.custom-link {
+ font-family: 'Pacifico', cursive;
+    background-color: #FFD700;
+    color: black; /* Cambia el color del texto a negro */
+    /* Puedes agregar otros estilos según tus preferencias, como padding, bordes, etc. */
+    padding: 5px 10px; /* Ejemplo de ajuste de relleno */
+    border-radius: 5px; /* Ejemplo de borde redondeado */
+
+}
+
+.search-bar {
+    width: 300px; /* Ancho deseado en píxeles */
+    margin-left:20px;
+}

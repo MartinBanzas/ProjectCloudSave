@@ -50,4 +50,9 @@ public class JuegoServiceImpl  implements JuegoService {
 
         juegoRepository.deleteById(theId);
     }
+
+    @Override
+    public List<Juego> findByNombreContainingIgnoreCase(String nombre) {
+       return juegoRepository.findByNameContainingIgnoreCase(nombre);
+    }
 }

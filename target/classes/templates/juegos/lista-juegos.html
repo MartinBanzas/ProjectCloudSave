@@ -7,6 +7,7 @@
     <title>Lista de juegos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/landing.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
@@ -15,7 +16,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="#!">Martin's Library</a>
+        <a class="navbar-brand custom-link" href="#!">Martin's Library</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
@@ -24,37 +25,47 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Acciones</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" th:href="@{/juegos/formAdd}">Añadir Juego</a></li>                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" th:href="@{/juegos/formAdd}">Añadir Juego</a></li>
+                        <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" href="#!">Popular Items</a></li>
                         <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
                     </ul>
                 </li>
+                <!-- Barra de búsqueda -->
+
+
+                <form class="d-flex" th:action="@{/juegos/buscar}" method="get">
+                    <input class="form-control me-2 search-bar" type="search" placeholder="Buscar" aria-label="Buscar" name="nombre">
+                    <button class="btn btn-outline-success" type="submit">Buscar</button>
+                </form>
             </ul>
-            <form class="d-flex">
-                <button class="btn btn-outline-dark" type="submit">
-                    <i class="bi-cart-fill me-1"></i>
-                    Salir
-                    <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                </button>
-            </form>
+
+            <button class="btn btn-outline-dark" type="submit">
+                <i class="bi-cart-fill me-1"></i>
+                Iniciar sesión
+                <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+            </button>
         </div>
     </div>
 </nav>
 
+
+<!--
 <header class="bg-dark py-1">
 <div class="container  px-4 px-lg-5 my-5">
     <div class="text-center text-white">
-        <h1 class="display-4 fw-bolder">Tu Biblioteca de juegos</h1>
+        <h1 class="display-4 fw-bolder">Biblioteca de juegos</h1>
         <div class="col-3">
         </div>
     </div>
-</div>
+</div
 </header>
+-->
 
 <div class="container">
     <div class="row">
         <!-- Iterar a través de los juegos -->
-        <div th:each="tempJuego : ${juegos}" class="col-lg-3 col-md-4 col-sm-6 game-card">
+        <div th:each="tempJuego : ${juegos}" class="col-2 game-card">
             <div class="card">
                 <!-- Imagen del juego -->
                 <img th:if="${tempJuego.id != null}" th:src="@{/juegos/img/{id}(id=${tempJuego.id})}"
@@ -74,7 +85,7 @@
                     <div class="row">
                         <div class="col-6">
                             <!-- Botón para editar -->
-                            <a href="#" name="game_edit" alt="Editar" class="btn  btn-sm">
+                            <a href="#" name="game_edit" alt="Editar" class="btn btn-sm" onclick="openEditModal()">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                      class="bi bi-pencil-square" viewBox="0 0 16 16">
                                     <path
@@ -84,8 +95,41 @@
                                 </svg>
                             </a>
                         </div>
+
+                        <!-- El modal -->
+                        <div id="editModal" class="modal">
+                            <div class="modal-content">
+                                <!-- Contenido del formulario de edición -->
+
+
+                                <form th:action="@{/juegos/update/{id}(id=${tempJuego.id})}" th:object="${tempJuego}" method="post">
+                                    <!-- Tus campos de formulario aquí -->
+                                    <div class="form-group">
+                                        <label for="name">Nuevo nombre</label>
+                                        <input type="text" class="form-control" id="name" th:field="*{name}" th:name="${tempJuego.name}" placeholder="Nuevo nombre">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sistema">Sistema</label>
+                                        <input type="text" class="form-control" id="sistema" th:field="*{sistema}" th:name="${tempJuego.sistema}" placeholder="Nuevo sistema(s)">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="directorio">Nuevo directorio</label>
+                                        <input type="text" class="form-control" id="directorio" th:field="*{directorio}" th:name="${tempJuego.directorio}" placeholder="Nuevo directorio">
+                                    </div>
+                                    <div class="btn-container">
+                                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                                        <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Cancelar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+
+
+
+                                <!-- Formulario para eliminar -->
                         <div class="col-6">
-                            <!-- Formulario para eliminar -->
+
                             <form th:action="@{/juegos/delete/{id}(id=${tempJuego.id})}" method="post"
                                   onsubmit="return confirm('¿Estás seguro de que deseas borrar este juego y todos sus datos asociados?');">
                                 <button type="submit" name="game_delete" alt="Borrar"
@@ -98,6 +142,7 @@
                                 </button>
                             </form>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -106,6 +151,19 @@
     </div>
 </div>
 
+<script>
+    // Función para abrir el modal de edición
+    function openEditModal() {
+        var editModal = document.getElementById("editModal");
+        editModal.style.display = "block";
+    }
+
+    // Función para cerrar el modal de edición
+    function closeEditModal() {
+        var editModal = document.getElementById("editModal");
+        editModal.style.display = "none";
+    }
+</script>
 </body>
 
 </html>

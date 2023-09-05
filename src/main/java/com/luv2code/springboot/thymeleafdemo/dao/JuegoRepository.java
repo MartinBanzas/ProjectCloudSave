@@ -9,4 +9,6 @@ public interface JuegoRepository extends JpaRepository <Juego, Integer> {
 
 
     public List<Juego> findAllByOrderByNameAsc();
+
+    public List <Juego> findByNameContainingIgnoreCase(String nombre);
 }

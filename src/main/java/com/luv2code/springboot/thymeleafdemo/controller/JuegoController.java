@@ -33,7 +33,7 @@ public class JuegoController {
 		Juego tempJuego = new Juego();
 		// add to the spring model
 		theModel.addAttribute("juegos", theGames);
-		theModel.addAttribute("tempJuego", tempJuego); // Agregar tempJu
+		theModel.addAttribute("tempJuego", tempJuego); // Hay que añadir un juego estándar al Modelo, vacío, para que no rompa con el forms modal de edición
 		return "juegos/lista-juegos";
 	}
 
@@ -65,6 +65,8 @@ public class JuegoController {
 	@PostMapping("update/{id}")
 	@Transactional
 	public String updateJuego(@PathVariable("id") int id, @RequestParam("name") String name, @RequestParam("sistema") String sistema, @RequestParam("directorio") String directorio) {
+		System.out.println(id);
+
 		Juego theGame = juegoService.findById(id);
 
 		theGame.setName(name);
@@ -98,7 +100,20 @@ public class JuegoController {
 		return "redirect:/juegos/lista";
 
 	}
+
+	@GetMapping("/buscar")
+	public String buscarJuegos(@RequestParam String nombre, Model model) {
+		System.out.println(nombre);
+		List<Juego> juegosEncontrados = juegoService.findByNombreContainingIgnoreCase(nombre);
+		model.addAttribute("juegos", juegosEncontrados);
+		Juego tempJuego = new Juego();
+		model.addAttribute(tempJuego);
+		return "juegos/lista-juegos"; // Reemplaza con el nombre de tu vista HTML
+	}
+
 }
+
+
 
 
 
