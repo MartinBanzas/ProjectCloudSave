@@ -15,7 +15,8 @@
         }
 
         .game-card {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+            font-size:13px;
         }
 
 
@@ -103,3 +104,32 @@
     width: 300px; /* Ancho deseado en píxeles */
     margin-left:20px;
 }
+
+.card-footer {
+    padding: 0.5rem; /* Ajusta el espacio interno del footer */
+    height: 2rem; /* Ajusta la altura deseada */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-body {
+    max-height: 35px; /* Ajusta la altura máxima según tus preferencias */
+        overflow: hidden; /* Oculta el contenido adicional si se desborda */
+        display: flex; /* Activa el modelo de caja flexible */
+        align-items: center; /* Centra verticalmente el contenido */
+        justify-content: center; /* Centra horizontalmente el contenido */
+        text-align: center; /*
+}
+
+
+.card-title {
+   font-size: 16px; /* Ajusta el tamaño del texto según tus preferencias */
+     display: flex;
+      align-items: center;
+      justify-content: center; /* Centra el contenido horizontalmente */
+      height: 100%; /* Ajusta la altura para que se alinee verticalmente */
+      text-align: center; /* Centra el texto horizontalmente */
+}
+
+
