@@ -8,7 +8,6 @@
 /home/martin/01-thymeleaf-demo-employees-starter-list/src/main/java/com/luv2code/springboot/thymeleafdemo/dao/ImgRepository.java
 /home/martin/01-thymeleaf-demo-employees-starter-list/src/main/java/com/luv2code/springboot/thymeleafdemo/entity/Img.java
 /home/martin/01-thymeleaf-demo-employees-starter-list/src/main/java/com/luv2code/springboot/thymeleafdemo/dao/JuegoRepository.java
-/home/martin/01-thymeleaf-demo-employees-starter-list/src/main/java/com/luv2code/springboot/thymeleafdemo/controller/ImgController.java
 /home/martin/01-thymeleaf-demo-employees-starter-list/src/main/java/com/luv2code/springboot/thymeleafdemo/service/ImgServiceImpl.java
 /home/martin/01-thymeleaf-demo-employees-starter-list/src/main/java/com/luv2code/springboot/thymeleafdemo/controller/FileController.java
 /home/martin/01-thymeleaf-demo-employees-starter-list/src/main/java/com/luv2code/springboot/thymeleafdemo/response/ResponseMessage.java
