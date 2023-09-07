@@ -1,0 +1,110 @@
+.custom-link {
+ font-family: 'Pacifico', cursive;
+    background-color: #FFD700;
+    color: black; /* Cambia el color del texto a negro */
+    /* Puedes agregar otros estilos según tus preferencias, como padding, bordes, etc. */
+    padding: 5px 10px; /* Ejemplo de ajuste de relleno */
+    border-radius: 5px; /* Ejemplo de borde redondeado */
+
+}
+
+     body {
+            background: rgb(224,224,224);
+            background: linear-gradient(90deg, rgba(224,224,224,1) 0%, rgba(134,134,134,1) 35%, rgba(75,75,75,1) 100%);
+            padding: 5px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        a {
+            text-decoration: none !important;
+        }
+
+        .container {
+            margin-top: 10px;
+        }
+
+.search-bar {
+    width: 300px; /* Ancho deseado en píxeles */
+    margin-left:20px;
+}
+
+
+.details-container {
+    display: flex;
+    align-items: flex-start; /* Alinea los elementos en la parte superior */
+}
+
+/* Estilo para la imagen */
+.details-container img {
+    margin-right: 20px; /* Espacio entre la imagen y la lista */
+}
+
+/* Estilo para la lista */
+.details-container ul {
+    list-style-type: none; /* Elimina los puntos de lista */
+    padding: 0;
+    margin: 0;
+}
+
+/* Estilo para los elementos de la lista */
+.details-container li {
+    margin-bottom: 10px; /* Espacio entre elementos de la lista */
+    position: relative; /* Permite agregar pseudo-elementos ::before para los puntos de lista */
+    padding-left: 30px; /* Agrega un margen desde la izquierda con respecto a la imagen */
+}
+
+/* Estilo para los puntos de lista */
+.details-container li::before {
+    content: "\2022"; /* Utiliza un punto como marcador de lista (puedes cambiarlo por otro símbolo si lo deseas) */
+    color: #007bff; /* Color de los puntos de lista */
+    font-size: 16px; /* Tamaño de fuente de los puntos de lista (ajusta según tu preferencia) */
+    position: absolute; /* Posición absoluta en relación con el elemento padre (li) */
+    left: 0; /* Coloca los puntos de lista en el borde izquierdo del elemento li */
+    top: 50%; /* Alinea verticalmente los puntos de lista en el centro del elemento li */
+    transform: translateY(-50%); /* Ajusta verticalmente la posición de los puntos de lista */
+}
+
+.table th {
+    width: 200px; /* Ajusta el ancho de las celdas de encabezado según tus preferencias */
+}
+
+/* Estilo para las celdas de datos */
+.table td {
+    width: 50px; /* Ajusta el ancho de las celdas de datos según tus preferencias */
+}
+
+
+
+.details-content {
+    flex: 1;
+}
+
+.btn-orange {
+    background-color: #FFA500; /* Color naranja */
+    color: #fff; /* Color del texto blanco */
+    /* Puedes agregar otros estilos según tus preferencias */
+}
+
+/* Estilo para botones naranjas al pasar el ratón (hover) */
+
+
+.details-container {
+    display: flex;
+    align-items: flex-start; /* Alinea los elementos en la parte superior */
+}
+
+.buttons-container {
+    display: block; /* Cambia a display: block para que los botones ocupen todo el ancho disponible */
+    margin-top: 10px; /* Espacio entre los botones */
+
+}
+
+.buttons-container button {
+    margin: 5px auto; /* Espacio entre los botones y centrado horizontalmente */
+    width: 150px; /* Ancho deseado en píxeles */
+}
+
+
+.partidas-container {
+    display: none;
+}
