@@ -1,52 +1,54 @@
+body {
+  background: rgb(224, 224, 224);
+  background: black;
+  padding: 5px;
+  font-family: "Roboto", sans-serif;
 
-        body {
-            background: rgb(224,224,224);
-            background: linear-gradient(90deg, rgba(224,224,224,1) 0%, rgba(134,134,134,1) 35%, rgba(75,75,75,1) 100%);
-            padding: 5px;
-            font-family: 'Roboto', sans-serif;
-        }
+  color: white;
+}
+a {
+  text-decoration: none !important;
+}
 
-        a {
-            text-decoration: none !important;
-        }
+.container {
+  margin-top: 10px;
+}
 
-        .container {
-            margin-top: 10px;
-        }
+.btn-log {
+margin:10px}
 
-        .game-card {
-            margin-bottom: 10px;
-            font-size:13px;
-        }
+.game-card {
+  margin-bottom: 10px;
+  font-size: 13px;
+}
 
+.game-card .card .game-img {
+  max-width: 100%; /* Asegura que la imagen no sea más ancha que su contenedor */
+  max-height: 100%; /* Asegura que la imagen no sea más alta que su contenedor */
+  object-fit: contain; /* Mantiene la relación de aspecto y ajusta la imagen sin distorsión */
+}
 
-        .game-card .card .game-img {
-            max-width: 100%; /* Asegura que la imagen no sea más ancha que su contenedor */
-            max-height: 100%; /* Asegura que la imagen no sea más alta que su contenedor */
-            object-fit: contain; /* Mantiene la relación de aspecto y ajusta la imagen sin distorsión */
-        }
+.game-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-top: 10px;
+}
 
-        .game-title {
-            font-size: 1.25rem;
-            font-weight: bold;
-            margin-top: 10px;
-        }
+.game-details {
+  font-size: 1rem;
+  color: #777;
+}
 
-        .game-details {
-            font-size: 1rem;
-            color: #777;
-        }
+.game-price {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #007bff;
+  margin-top: 10px;
+}
 
-        .game-price {
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: #007bff;
-            margin-top: 10px;
-        }
-
-        .btn-add-game {
-            margin-top: 20px;
-        }
+.btn-add-game {
+  margin-top: 20px;
+}
 
 /* Estilo para el modal principal */
 .modal {
@@ -56,80 +58,96 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.7); /* Fondo semi-transparente */
-  z-index: 1;
 }
 
 /* Estilo para el contenido del modal */
 .modal-content {
-  background-color: #fff;
+ color: black;
   margin: 10% auto; /* Centra el modal verticalmente */
   padding: 20px;
   width: 80%;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 
-/* Estilo para el botón de cerrar (si deseas agregar uno) */
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
+.modal-header .btn-close {
+  color: white; /* Establecer el color blanco */
+  opacity: 1; /* Asegurarse de que las aspas de cierre sean completamente visibles */
+  font-size: 16px; /* Tamaño de fuente opcional */
+  font-weight: bold; /* Puedes ajustar la fuente según tus preferencias */
 }
 
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
+/* Cambiar el color del botón de cierre al pasar el cursor (opcional) */
+.modal-header .btn-close:hover,
+.modal-header .btn-close:focus {
+  color: white; /* Establecer el color blanco al pasar el cursor o enfocar */
+  text-decoration: none; /* Eliminar la decoración de texto al pasar el cursor o enfocar */
+  cursor: pointer; /* Cambiar el cursor al pasar el cursor o enfocar */
 }
 
-
-    .btn-container {
-        margin-top: 20px;
-    }
-
+.btn-container {
+  margin-top: 20px;
+}
 
 .custom-link {
- font-family: 'Pacifico', cursive;
-    background-color: #FFD700;
-    color: black; /* Cambia el color del texto a negro */
-    /* Puedes agregar otros estilos según tus preferencias, como padding, bordes, etc. */
-    padding: 5px 10px; /* Ejemplo de ajuste de relleno */
-    border-radius: 5px; /* Ejemplo de borde redondeado */
-
+  font-family: "Pacifico", cursive;
+  background-color: #ffd700;
+  color: black; /* Cambia el color del texto a negro */
+  /* Puedes agregar otros estilos según tus preferencias, como padding, bordes, etc. */
+  padding: 5px 10px; /* Ejemplo de ajuste de relleno */
+  border-radius: 5px; /* Ejemplo de borde redondeado */
 }
 
 .search-bar {
-    width: 300px; /* Ancho deseado en píxeles */
-    margin-left:20px;
+  width: 300px; /* Ancho deseado en píxeles */
+  margin-left: 20px;
 }
 
 .card-footer {
-    padding: 0.5rem; /* Ajusta el espacio interno del footer */
-    height: 2rem; /* Ajusta la altura deseada */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  padding: 0.5rem; /* Ajusta el espacio interno del footer */
+  height: 2rem; /* Ajusta la altura deseada */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .card-body {
-    max-height: 35px; /* Ajusta la altura máxima según tus preferencias */
-        overflow: hidden; /* Oculta el contenido adicional si se desborda */
-        display: flex; /* Activa el modelo de caja flexible */
-        align-items: center; /* Centra verticalmente el contenido */
-        justify-content: center; /* Centra horizontalmente el contenido */
-        text-align: center; /*
+  max-height: 35px; /* Ajusta la altura máxima según tus preferencias */
+  overflow: hidden; /* Oculta el contenido adicional si se desborda */
+  display: flex; /* Activa el modelo de caja flexible */
+  align-items: center; /* Centra verticalmente el contenido */
+  justify-content: center; /* Centra horizontalmente el contenido */
+  text-align: center; 
 }
 
 
 .card-title {
    font-size: 16px; /* Ajusta el tamaño del texto según tus preferencias */
-     display: flex;
-      align-items: center;
-      justify-content: center; /* Centra el contenido horizontalmente */
-      height: 100%; /* Ajusta la altura para que se alinee verticalmente */
-      text-align: center; /* Centra el texto horizontalmente */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centra el contenido horizontalmente */
+  height: 100%; /* Ajusta la altura para que se alinee verticalmente */
+  text-align: center; /* Centra el texto horizontalmente */
 }
 
+.card-with-band {
+  position: relative;
+  padding-top: 10px; /* Ajusta el espacio en la parte superior para la banda */
+}
 
+/* Estilo de la banda */
+.band {
+  background-color: limegreen; /* Fondo verde lima */
+  position: absolute;
+border-radius:1px;
+px;
+  left: 16px; /* La posición hacia adentro desde el borde izquierdo */
+  top:12px;
+  padding: 2px 0; /* Espaciado interno de la banda */
+  color: white; /* Color del texto */
+   /* Texto en negrita */
+  transform-origin: left top; /* Punto de origen para la rotación */
+  transform: translateY(-50%) rotate(45deg); /* Rotar 45 grados en sentido horario */
+}
+/* Estilos para las tarjetas */
+.card.game-card {
+  position: relative; /* Para que la banda se posicione con respecto a la tarjeta */
+}

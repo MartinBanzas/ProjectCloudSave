@@ -1,100 +1,449 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-<head>
+  <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=yes"
+    />
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-
+    <link
+      href="/css/bootstrap.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/css/partidas.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+      rel="stylesheet"
+    />
     <title>Lista de juegos</title>
-</head>
-<body>
+  </head>
+  <body>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
 
-<div class="container" style="max-width: 900px">
-    <h3>Subir partida</h3>
-
-    <form id="uploadForm"
-          class="d-flex flex-row align-items-center justify-content-between"
-          method="post"
-          th:action="@{/juegos/files/upload(id=${id}, descripcion=${descripcionJuego})}"
-          enctype="multipart/form-data">
-
-        <!-- Campo requerido para el nombre del juego -->
-        <div class="mb-3 me-2">
-            <label for="descripcion" class="form-label">Descripción:</label>
-            <input type="text" id="descripcion" name="descripcion" class="form-control" required>
-        </div>
-
-        <!-- Campo para subir el archivo -->
-        <div class="mb-3 me-2">
-            <label for="input-file" class="form-label">Archivo:</label>
-            <input id="input-file" type="file" name="file" class="form-control" required>
-        </div>
-
-        <button class="btn btn-sm btn-outline-success" type="submit">
-            Subir
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container px-4 px-lg-5">
+        <a class="navbar-brand custom-link" th:href="@{/juegos/lista}"
+        >Martin's Library</a
+        >
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
         </button>
-    </form>
-</div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#!">Home</a>
+            </li>
+            <li class="nav-item">
+              <a
+                      class="nav-link"
+                      href="#!"
+                      data-bs-toggle="modal"
+                      data-bs-target="#aboutModal"
+              >About</a
+              >
+            </li>
+
+            <li class="nav-item dropdown">
+              <a
+                      class="nav-link dropdown-toggle"
+                      id="navbarDropdown"
+                      href="#"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+              >Acciones</a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" th:href="@{/juegos/formAdd}"
+                  >Añadir Juego</a
+                  >
+                </li>
+                <!--Eliminado temporalmente hasta darle funcionalidad
+                          <li><hr class="dropdown-divider" /></li>
+
+                        <li><a class="dropdown-item" href="#!">Popular Items</a></li>
+                        <li><a class="dropdown-item" href="#!">New Arrivals</a></li>-->
+              </ul>
+            </li>
 
 
-<hr>
-
-<div class="container">
-    <h2>Detalles de: <span th:text="${param.name}"></span></h2>
-    <hr>
-<table class="table table-bordered table-striped">
-    <thead class="table-dark">
-    <tr>
-        <th>Descripción</th>
-        <th>Acciones</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="tempPartida : ${partida}" th:if="${tempPartida.juego.id} == ${id}">
-        <td th:text="${tempPartida.Descripcion}" />
-        <td>
-            <div class="d-flex align-items-center">
-
-                <a th:href="@{/juegos/files/{id}(id=${tempPartida.id})}"  alt="Descargar">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor" class="bi bi-cloud-download-fill" viewBox="0 32 32" style="display: inline-block;">
-                        <path fill-rule="evenodd" d="M8 0a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 4.095 0 5.555 0 7.318 0 9.366 1.708 11 3.781 11H7.5V5.5a.5.5 0 0 1 1 0V11h4.188C14.502 11 16 9.57 16 7.773c0-1.636-1.242-2.969-2.834-3.194C12.923 1.999 10.69 0 8 0zm-.354 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V11h-1v3.293l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
-                    </svg>
-                </a>
-                <form th:action="@{/juegos/files/delete/{id}(id=${tempPartida.id})}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas borrar esta partida?');">
-                    <button type="submit" name="game_delete" alt="Borrar" class="btn btn-link" style="display: inline-block;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor" class="bi bi-trash3" viewBox="0 0 32 32">
-                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
-                    </svg>
-                </button>
+            <!-- Barra de búsqueda -->
+            <form class="d-flex" th:action="@{/juegos/buscar}" method="get">
+              <input
+                      class="form-control me-2 search-bar"
+                      type="search"
+                      placeholder="Introduce el nombre a buscar..."
+                      aria-label="Buscar"
+                      name="nombre"
+              />
+              <button class="btn btn-outline-light" type="submit">
+                <i class="fas fa-search"></i>
+                <!-- Ícono de lupa de FontAwesome -->
+              </button>
             </form>
+          </ul>
+
+          <form th:unless="${#authorization.expression('isAuthenticated()')}" th:action="@{/loginUser}" method="post">
+            <button class="btn btn-outline-light btn-log" type="submit">
+              <i class="bi-cart-fill me-1"></i>
+              Iniciar sesión
+            </button>
+          </form>
+
+          <div th:if="${#authorization.expression('isAuthenticated()')}">
+            <span class="navbar-text" style="color: #ffd700; margin:15px; font-weight: bold;"><span th:text="${#authentication.principal.username}"></span></span>
+          </div>
+
+
+
+          <form th:action="@{/logout}" method="post">
+            <button class="btn btn-outline-light" type="submit">
+              <i class="bi-cart-fill me-1"></i>
+              Finalizar sesión
+            </button>
+          </form>
+
+        </div>
+      </div>
+      <div
+              class="modal"
+              id="aboutModal"
+              tabindex="-1"
+              aria-labelledby="aboutModalLabel"
+              aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="aboutModalLabel">
+                Acerca de esta web
+              </h5>
+              <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+              ></button>
             </div>
+            <div class="modal-body">
+              <!-- Contenido del modal -->
+              <p>
+                Web app desarrollada por Martín Antelo Jallas, estudiante de 2º
+                de DAW en A Coruña. ¿Te gusta lo que ves?. Háblame en el
+                645872184
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
 
-        </td>
-    </tr>
+    <div class="container" style="max-width: 900px">
+      <div class="container">
+        <h2>Detalles de <span class="titulo" th:text="${param.name}" /></h2>
+        <hr />
+        <div class="details-container">
+          <img
+            th:if="${juego.Img  != null}"
+            th:src="@{/juegos/img/{id}(id=${juego.id})}"
+            alt="Imagen del juego"
+            class="card-img-top game-img img-fluid"
+          />
+          <img
+            th:if="${juego.Img == null}"
+            th:src="@{/placeholder.png}"
+            alt="Imagen del juego"
+            class="card-img-top game-img img-fluid"
+          />
+          <ul>
+            <li>
+              Sistema: <span class="colorElemento" th:text="${juego.Sistema}" />
+            </li>
+            <li>Compañía</li>
+            <li>Año de lanzamiento</li>
+            <li>
+              Directorio de guardado:
+              <span class="colorElemento" th:text="${juego.Directorio}" />
+            </li>
+          </ul>
+        </div>
 
-    </tbody>
-</table>
+        <div class="buttons-container">
+          <button
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#uploadImageModal"
+          >
+            Subir Imagen
+          </button>
+          <button
+            class="btn btn-orange"
+            data-bs-toggle="modal"
+            data-bs-target="#uploadFileModal"
+          >
+            Subir Archivo
+          </button>
+          <button id="togglePartidas" class="btn btn-primary">
+            Mostrar Partidas
+          </button>
+          <button
+            id="editarDatos"
+            class="btn btn-orange"
+            data-bs-toggle="modal"
+            data-bs-target="#editModal"
+          >
+            Editar datos
+          </button>
+        </div>
 
-</div>
+        <div class="partidas-container" id="tablaPartidas">
+          <table class="table table-dark table-bordered table-striped">
+            <thead class="table-dark">
+            <tr>
+              <th style="width: 60%">Descripción</th>
+              <th style="width: 40%">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="tempPartida : ${partida}" th:if="${tempPartida.juego.id} == ${id}">
+              <td th:text="${tempPartida.Descripcion}" />
+              <td class="text-center"> <!-- Agregar la clase 'text-center' para centrar los botones -->
+                <div class="d-flex justify-content-center"> <!-- Utilizar 'justify-content-center' para centrar horizontalmente -->
+                  <a th:href="@{/juegos/files/{id}(id=${tempPartida.id})}" alt="Descargar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1.5em" fill="currentColor" class="bi bi-cloud-download-fill" viewBox="0 0 16 16" style="display: inline-block">
+                      <path fill-rule="evenodd" d="M8 0a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 4.095 0 5.555 0 7.318 0 9.366 1.708 11 3.781 11H7.5V5.5a.5.5 0 0 1 1 0V11h4.188C14.502 11 16 9.57 16 7.773c0-1.636-1.242-2.969-2.834-3.194C12.923 1.999 10.69 0 8 0zm-.354 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V11h-1v3.293l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
+                    </svg>
+                  </a>
+                  <form th:action="@{/juegos/files/delete/{id}(id=${tempPartida.id})}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas borrar esta partida?');">
+                    <button type="submit" name="game_delete" alt="Borrar" class="btn-delete">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1.5em" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16" style="display: inline-block">
+                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                      </svg>
+                    </button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
 
-<form id="imgForm"
-      method="post"
-      th:action="@{/juegos/img/uploadImg(id=${id})}"
-      enctype="multipart/form-data">
-    <!-- Campo para subir la carátula -->
-    <div class="mb-3">
-        <label for="input-file" class="form-label">Imagen:</label>
-        <input id="input-img" type="file" name="img" class="form-control" required>
+
+
+      </div>
+
+      <div
+        class="modal fade"
+        id="uploadImageModal"
+        tabindex="-1"
+        aria-labelledby="uploadImageModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="uploadImageModalLabel">
+                Subir Imagen
+              </h5>
+              <button
+                type="button"
+                class="btn-close custom-close-button"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <!-- Formulario de subida de imagen -->
+              <form
+                id="imgForm"
+                method="post"
+                th:action="@{/juegos/img/uploadImg(id=${id})}"
+                enctype="multipart/form-data"
+              >
+                <!-- Campo para subir la carátula -->
+                <div class="mb-3">
+                  <label for="input-img" class="form-label">Imagen:</label>
+                  <input
+                    id="input-img"
+                    type="file"
+                    name="img"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <button
+                  type="submit"
+                  class="btn btn-sm btn-outline-success float-right"
+                >
+                  Subir
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="editModal"
+        class="modal fade"
+        tabindex="-1"
+        aria-labelledby="editModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <!-- Clase modal-lg para un modal grande, puedes ajustar según tus necesidades -->
+          <div class="modal-content">
+            <!-- Encabezado del modal con el botón de cierre -->
+            <div class="modal-header">
+              <h5 class="modal-title" id="editModalLabel">Editar Juego</h5>
+            </div>
+            <!-- Contenido del formulario de edición -->
+            <form
+              th:action="@{/juegos/update/{id}(id=${juego.id})}"
+              th:object="${Juego}"
+              method="post"
+            >
+              <!-- Tus campos de formulario aquí -->
+              <div class="form-group">
+                <label for="name">Nuevo nombre</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  required
+                  name="name"
+                  placeholder="Nuevo nombre"
+                />
+              </div>
+              <div class="form-group">
+                <label for="sistema">Sistema</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="sistema"
+                  required
+                  name="sistema"
+                  placeholder="Nuevo sistema(s)"
+                />
+              </div>
+              <div class="form-group">
+                <label for="directorio">Nuevo directorio</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="directorio"
+                  required
+                  name="directorio"
+                  placeholder="Nuevo directorio"
+                />
+              </div>
+              <div class="btn-container">
+                <button type="submit" class="btn btn-primary">
+                  Guardar cambios
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Cancelar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal para subir archivo -->
+      <div
+        class="modal fade"
+        id="uploadFileModal"
+        tabindex="-1"
+        aria-labelledby="uploadFileModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="uploadFileModalLabel">
+                Subir Partida
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <!-- Formulario de subida de archivo -->
+              <form
+                id="uploadForm"
+                method="post"
+                th:action="@{/juegos/files/upload(id=${id}, descripcion=${descripcionJuego})}"
+                enctype="multipart/form-data"
+              >
+                <!-- Campo requerido para el nombre del juego -->
+                <div class="mb-3">
+                  <label for="descripcion" class="form-label"
+                    >Descripción:</label
+                  >
+                  <input
+                    type="text"
+                    id="descripcion"
+                    name="descripcion"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <!-- Campo para subir el archivo -->
+                <div class="mb-3">
+                  <label for="input-file" class="form-label">Partida:</label>
+                  <input
+                    id="input-file"
+                    type="file"
+                    name="file"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <button
+                  type="submit"
+                  class="btn btn-sm btn-outline-success float-right"
+                >
+                  Subir
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <button class="btn btn-sm btn-outline-success float-right" type="submit">
-        Subir
-    </button>
-</form>
-
-</body>
+    <script src="/js/partidas.js"></script>
+  </body>
 </html>

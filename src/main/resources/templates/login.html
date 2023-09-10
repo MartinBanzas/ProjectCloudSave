@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <!-- Enlace a Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: black; /* Color de fondo oscuro */
+            color: #ffffff; /* Color de texto blanco */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <!-- Aplicar la clase bg-dark para hacer la tarjeta de color oscuro -->
+            <div class="card bg-dark text-white">
+                <div class="card-header">
+                    <h3 class="text-center">Iniciar Sesión</h3>
+                </div>
+                <div class="card-body">
+                    <form action="#" th:action="@{/authenticateTheUser}" method="POST">
+                        <div th:if="${param.error}">
+                            <i style="color:red">Usuario o contraseña erróneos</i>
+                        </div>
+                        <div th:if="${param.expired}">
+                            <i style="color:red">Cookie expirada, inicia sesión nuevamente</i>
+                        </div>
+
+                        <div th:if="${param.logout}">
+                            <i style="color:red">Has cerrado la sesión con éxito</i>
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Usuario</label>
+                            <input type="text" class="form-control" name="username" id="username" placeholder="Ingrese su usuario">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Contraseña</label>
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Ingrese su contraseña">
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="remember" name="remember-me">
+                            <label class="form-check-label" for="remember">Recordar</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block"
+                                >Iniciar Sesión</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Enlace a Bootstrap JS y jQuery (para el funcionamiento de Bootstrap) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

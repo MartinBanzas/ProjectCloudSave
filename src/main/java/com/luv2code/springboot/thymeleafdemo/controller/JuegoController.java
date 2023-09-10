@@ -7,10 +7,13 @@ import com.luv2code.springboot.thymeleafdemo.service.JuegoService;
 import com.luv2code.springboot.thymeleafdemo.service.PartidaService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -25,9 +28,31 @@ public class JuegoController {
 	@Autowired
 	private FileStorageService storageService;
 
+/*
+	@GetMapping("/lista")
+	public String listJuegos(Model theModel) {
+
+		List<Juego> theGames = juegoService.findAll();
+		Juego tempJuego = new Juego();
+
+		List<List<Juego>> grupoJuegos = new ArrayList<>();
+		for (int i = 0; i < theGames.size(); i += 12) {
+			int fin = Math.min(i + 12, theGames.size());
+			grupoJuegos.add(theGames.subList(i, fin));
+		}
+		// add to the spring model
+		theModel.addAttribute("grupoJuegos", grupoJuegos);
+		theModel.addAttribute("tempJuego", tempJuego); // Hay que añadir un juego estándar al Modelo, vacío, para que no rompa con el forms modal de edición
+		return "juegos/lista-juegos";
+	}*/
 
 	@GetMapping("/lista")
 	public String listJuegos(Model theModel) {
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+
+		theModel.addAttribute("username", username);
 
 		List<Juego> theGames = juegoService.findAll();
 		Juego tempJuego = new Juego();
@@ -47,16 +72,19 @@ public class JuegoController {
 	@GetMapping("/partidas/{id}")
 	public String listaPartidas(@PathVariable("id") int id, Model theModel) {
 
+		Juego theGame = juegoService.findById(id);
+
 		List<Partida> listaPartidas = partidaService.findAll();
 
 		//Partida partida = partidaService.findById(id);
 		theModel.addAttribute("partida", listaPartidas);
+		theModel.addAttribute("juego", theGame);
 
 		return "juegos/partidas";
 	}
 
 	@PostMapping("/save")
-	public String saveJuego(@ModelAttribute("juegos") Juego theGame) {
+	public String saveJuego(@ModelAttribute("juego") Juego theGame) {
 		juegoService.save(theGame);
 
 		return "redirect:/juegos/lista";
@@ -107,8 +135,8 @@ public class JuegoController {
 		List<Juego> juegosEncontrados = juegoService.findByNombreContainingIgnoreCase(nombre);
 		model.addAttribute("juegos", juegosEncontrados);
 		Juego tempJuego = new Juego();
-		model.addAttribute(tempJuego);
-		return "juegos/lista-juegos"; // Reemplaza con el nombre de tu vista HTML
+		model.addAttribute("tempJuego",tempJuego);
+		return "juegos/lista-juegos";
 	}
 
 }

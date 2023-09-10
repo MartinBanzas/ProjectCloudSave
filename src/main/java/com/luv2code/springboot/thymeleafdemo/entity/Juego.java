@@ -2,6 +2,7 @@ package com.luv2code.springboot.thymeleafdemo.entity;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.type.NumericBooleanConverter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,10 @@ public class Juego {
 
     @Column(name="Directorio")
     private String Directorio;
+
+    @Column(name = "terminado")
+    @Convert(converter = NumericBooleanConverter.class)
+    private boolean terminado;
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "juego", cascade={CascadeType.ALL})
     private List<Partida> listaPartidas;
@@ -108,6 +113,14 @@ public class Juego {
 
     public void setImg(Img img) {
         this.img = img;
+    }
+
+    public boolean isTerminado() {
+        return terminado;
+    }
+
+    public void setTerminado(boolean terminado) {
+        this.terminado = terminado;
     }
 
 }

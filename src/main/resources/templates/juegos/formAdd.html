@@ -8,14 +8,141 @@
 
 
   <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-
+  <link
+          href="/css/bootstrap.css"
+          rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+          crossorigin="anonymous"
+  />
+  <link rel="stylesheet" href="/css/landing.css" />
+  <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+  />
+  <link
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+          rel="stylesheet"
+  />
+  <link
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+          rel="stylesheet"
+  />
   <title>Añadir nuevo juego</title>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container px-4 px-lg-5">
+    <a class="navbar-brand custom-link" th:href="@{/juegos/lista}"
+    >Martin's Library</a
+    >
+    <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#!">Home</a>
+        </li>
+        <li class="nav-item">
+          <a
+                  class="nav-link"
+                  href="#!"
+                  data-bs-toggle="modal"
+                  data-bs-target="#aboutModal"
+          >About</a
+          >
+        </li>
+
+        <li class="nav-item dropdown">
+          <a
+                  class="nav-link dropdown-toggle"
+                  id="navbarDropdown"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+          >Acciones</a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li>
+              <a class="dropdown-item" th:href="@{/juegos/formAdd}"
+              >Añadir Juego</a
+              >
+            </li>
+            <!--Eliminado temporalmente hasta darle funcionalidad
+                      <li><hr class="dropdown-divider" /></li>
+
+                    <li><a class="dropdown-item" href="#!">Popular Items</a></li>
+                    <li><a class="dropdown-item" href="#!">New Arrivals</a></li>-->
+          </ul>
+        </li>
+
+
+        <!-- Barra de búsqueda -->
+        <form class="d-flex" th:action="@{/juegos/buscar}" method="get">
+          <input
+                  class="form-control me-2 search-bar"
+                  type="search"
+                  placeholder="Introduce el nombre a buscar..."
+                  aria-label="Buscar"
+                  name="nombre"
+          />
+          <button class="btn btn-outline-light" type="submit">
+            <i class="fas fa-search"></i>
+            <!-- Ícono de lupa de FontAwesome -->
+          </button>
+        </form>
+      </ul>
+
+      <button class="btn btn-outline-light" type="submit">
+        <i class="bi-cart-fill me-1"></i>
+        Iniciar sesión
+        <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+      </button>
+    </div>
+  </div>
+  <div
+          class="modal"
+          id="aboutModal"
+          tabindex="-1"
+          aria-labelledby="aboutModalLabel"
+          aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="aboutModalLabel">
+            Acerca de esta web
+          </h5>
+          <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <!-- Contenido del modal -->
+          <p>
+            Web app desarrollada por Martín Antelo Jallas, estudiante de 2º
+            de DAW en A Coruña. ¿Te gusta lo que ves?. Háblame en el
+            645872184
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
 <div class="container">
-  <h3>Lista de juegos</h3>
-  <hr>
+
   <p class="h4 mb-4">Añadir nuevo juego</p>
   <form action="#" th:action="@{/juegos/save}"
                    th:object="${juegos}" method="POST">
@@ -27,23 +154,11 @@
   <input type="text" th:field="*{directorio}"
          class="form-control mb-4 w-25" placeholder="Directorio" required>
     <button type="submit" class="btn btn-info col-2">Guardar</button>
-    <button id="galeria" class="btn btn-info col-2">Añadir carátula</button>
-    <script>
 
-
-  // Obtener referencia al botón "Añadir carátula" por su id
-  const botonGaleria = document.getElementById("galeria");
-
-  // Agregar event listener al botón "Añadir carátula"
-  botonGaleria.addEventListener("click", function(event) {
-    event.preventDefault(); // Evitar el envío del formulario
-        import SGDB from "steamgriddb";
-    const client = new SGDB('bf17005eda7af4ff3201de2fa5003436');
-    // Código que se ejecutará cuando se haga clic en el botón "Añadir carátula"
-  alert("¡Botón 'Añadir carátula' clickeado!");
-  });
-</script>
   </form>
+
+
+
   <hr>
   <a th:href="@{/juegos/lista}">Volver a la lista</a>
 </div>
