@@ -43,7 +43,7 @@ public class SecurityConfig {
                 )
                 .rememberMe(rememberMe ->
                         rememberMe
-                                .key("your-remember-me-key") // Cambia esto por una clave única
+                                .key("ashkdfjas212766-vzbxghgh-782163") // Cambia esto por una clave única
                                 .rememberMeCookieName("cookieWebMartin")
                                 .tokenValiditySeconds(6048000) // Duración del token en segundos (10 semanas en este ejemplo)
                 )

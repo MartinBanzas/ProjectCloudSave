@@ -7,6 +7,8 @@
 /home/martin/01-thymeleaf-demo-employees-starter-list/src/main/java/com/luv2code/springboot/thymeleafdemo/dao/PartidaRepository.java
 /home/martin/01-thymeleaf-demo-employees-starter-list/src/main/java/com/luv2code/springboot/thymeleafdemo/dao/ImgRepository.java
 /home/martin/01-thymeleaf-demo-employees-starter-list/src/main/java/com/luv2code/springboot/thymeleafdemo/entity/Img.java
+/home/martin/01-thymeleaf-demo-employees-starter-list/src/main/java/com/luv2code/springboot/thymeleafdemo/security/SecurityConfig.java
+/home/martin/01-thymeleaf-demo-employees-starter-list/src/main/java/com/luv2code/springboot/thymeleafdemo/controller/LoginController.java
 /home/martin/01-thymeleaf-demo-employees-starter-list/src/main/java/com/luv2code/springboot/thymeleafdemo/dao/JuegoRepository.java
 /home/martin/01-thymeleaf-demo-employees-starter-list/src/main/java/com/luv2code/springboot/thymeleafdemo/service/ImgServiceImpl.java
 /home/martin/01-thymeleaf-demo-employees-starter-list/src/main/java/com/luv2code/springboot/thymeleafdemo/controller/FileController.java

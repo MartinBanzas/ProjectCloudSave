@@ -25,9 +25,9 @@ public class Juego {
     @Column(name="Directorio")
     private String Directorio;
 
-    @Column(name = "terminado")
+   /*  @Column(name = "terminado")
     @Convert(converter = NumericBooleanConverter.class)
-    private boolean terminado;
+    private boolean terminado;*/
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "juego", cascade={CascadeType.ALL})
     private List<Partida> listaPartidas;
@@ -57,9 +57,7 @@ public class Juego {
                 '}';
     }
 
-    public List<Partida> getListaPartidas() {
-        return listaPartidas;
-    }
+    public List<Partida> getListaPartidas() {return listaPartidas;}
 
     public void setListaPartidas(List<Partida> listaPartidas) {
         this.listaPartidas = listaPartidas;
@@ -115,12 +113,13 @@ public class Juego {
         this.img = img;
     }
 
+    /*
     public boolean isTerminado() {
         return terminado;
     }
 
     public void setTerminado(boolean terminado) {
         this.terminado = terminado;
-    }
+    }*/
 
 }
