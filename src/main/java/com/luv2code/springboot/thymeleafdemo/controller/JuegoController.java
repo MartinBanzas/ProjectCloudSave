@@ -28,7 +28,7 @@ public class JuegoController {
 	@Autowired
 	private FileStorageService storageService;
 
-/*
+/* Controlador para vista paginada...en desarrollo
 	@GetMapping("/lista")
 	public String listJuegos(Model theModel) {
 
