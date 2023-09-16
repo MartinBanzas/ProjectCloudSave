@@ -3,9 +3,13 @@ package com.luv2code.springboot.thymeleafdemo.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.type.NumericBooleanConverter;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Entity
 @Table(name="juego")
@@ -25,6 +29,20 @@ public class Juego {
     @Column(name="Directorio")
     private String Directorio;
 
+
+    @Column(name = "terminado", columnDefinition = "TINYINT(1)")
+    private boolean terminado;
+
+    @Column(name = "fInicio")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private Date fInicio;
+
+    @Column(name = "fFin")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private Date fFin;
+
    /*  @Column(name = "terminado")
     @Convert(converter = NumericBooleanConverter.class)
     private boolean terminado;*/
@@ -35,7 +53,6 @@ public class Juego {
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "juego", cascade = CascadeType.ALL, orphanRemoval = true)
     private Img img;
 
-    //private LocalDateTime ultimaActu;
 
     public Juego() {}
 
@@ -111,6 +128,44 @@ public class Juego {
 
     public void setImg(Img img) {
         this.img = img;
+    }
+
+    public boolean isTerminado() {
+        return terminado;
+    }
+
+    public void setTerminado(boolean terminado) {
+        this.terminado = terminado;
+    }
+
+    public String getfInicio() {
+
+        if (fInicio == null) {
+            return "Sin establecer";
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String fechaFormateada = sdf.format(fInicio);
+        return fechaFormateada;
+    }
+
+    public void setfInicio(Date fInicio) {
+        this.fInicio = fInicio;
+    }
+
+    public String getfFin() {
+
+        if (fFin == null) {
+            return "Sin establecer";
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String fechaFormateada = sdf.format(fFin);
+
+        return fechaFormateada;
+
+    }
+
+    public void setfFin(Date fFin) {
+        this.fFin = fFin;
     }
 
     /*

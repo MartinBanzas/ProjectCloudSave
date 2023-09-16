@@ -203,8 +203,8 @@
                 alt="Imagen del juego"
                 class="card-img-top game-img img-fluid"
             /></a>
-
             <div class="card-body">
+              <div class="band" th:if="${tempJuego.terminado}">Done!</div>
 
               <!-- Nombre del juego -->
               <a

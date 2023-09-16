@@ -1,4 +1,4 @@
-  function openEditModal() {
+ function openEditModal() {
                 var editModal = document.getElementById("editModal");
                 editModal.style.display = "block";
             }
