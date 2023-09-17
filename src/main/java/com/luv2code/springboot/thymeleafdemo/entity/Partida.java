@@ -16,7 +16,6 @@ public class Partida {
     @JoinColumn(name="juegoid")
     private Juego juego;
 
-
     @Column(name="descripcion")
     private String descripcion;
 
@@ -28,7 +27,6 @@ public class Partida {
 
     public Partida(Juego juego, String descripcion) {
         this.juego = juego;
-
         this.descripcion = descripcion;
     }
 

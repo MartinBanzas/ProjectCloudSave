@@ -190,34 +190,46 @@
               Directorio de guardado:
               <span class="colorElemento" th:text="${juego.Directorio}" />
             </li>
+            <li>Fecha de inicio: <span class="titulo" th:text="${juego.fInicio}" /></li>
+            <li>Fecha de finalización: <span class="titulo" th:text="${juego.fFin}" />
+            </li>
           </ul>
         </div>
 
         <div class="buttons-container">
           <button
-            class="btn btn-primary"
+            class="btn btn-sm btn-primary"
             data-bs-toggle="modal"
             data-bs-target="#uploadImageModal"
           >
             Subir Imagen
           </button>
           <button
-            class="btn btn-orange"
+            class="btn btn-sm btn-orange"
             data-bs-toggle="modal"
             data-bs-target="#uploadFileModal"
           >
             Subir Archivo
           </button>
-          <button id="togglePartidas" class="btn btn-primary">
+          <button id="togglePartidas" class="btn btn-sm btn-primary">
             Mostrar Partidas
           </button>
           <button
             id="editarDatos"
-            class="btn btn-orange"
+            class="btn btn-sm btn-orange"
             data-bs-toggle="modal"
             data-bs-target="#editModal"
           >
             Editar datos
+          </button>
+
+          <button
+                  id="toggleCompletado"
+                  class="btn btn-sm btn-primary"
+                  data-bs-toggle="modal"
+                  data-bs-target="#marcarCompletado"
+          >
+                Marcar completado
           </button>
         </div>
 
@@ -252,8 +264,6 @@
             </tbody>
           </table>
         </div>
-
-
 
       </div>
 
@@ -308,6 +318,40 @@
         </div>
       </div>
 
+      <!-- Agrega el formulario oculto -->
+      <div id="marcarCompletado" class="modal fade">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+            <!-- Encabezado del modal con el botón de cierre -->
+            <div class="modal-header">
+              <h5 class="modal-title" id="marcarCompletadoLabel">Marcar Completado</h5>
+              <button type="button" class="btn-close custom-close-button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!-- Contenido del formulario de marcar completado -->
+            <form th:action="@{/juegos/completo}" method="post">
+              <div class="modal-body">
+                <input type="hidden" name="id" th:value="${juego.id}" /> <!-- Campo oculto para el ID del juego -->
+                <div class="mb-3">
+                  <label for="fechaInicio" class="form-label">Fecha de Inicio</label>
+                  <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" required>
+                </div>
+                <div class="mb-3">
+                  <label for="fechaFin" class="form-label">Fecha de Fin</label>
+                  <input type="date" class="form-control" id="fechaFin" name="fechaFin">
+                </div>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+
       <div
         id="editModal"
         class="modal fade"
@@ -316,7 +360,6 @@
         aria-hidden="true"
       >
         <div class="modal-dialog modal-dialog-centered modal-lg">
-          <!-- Clase modal-lg para un modal grande, puedes ajustar según tus necesidades -->
           <div class="modal-content">
             <!-- Encabezado del modal con el botón de cierre -->
             <div class="modal-header">
@@ -379,6 +422,8 @@
         </div>
       </div>
 
+
+
       <!-- Modal para subir archivo -->
       <div
         class="modal fade"
@@ -408,7 +453,7 @@
                 th:action="@{/juegos/files/upload(id=${id}, descripcion=${descripcionJuego})}"
                 enctype="multipart/form-data"
               >
-                <!-- Campo requerido para el nombre del juego -->
+                <!-- Campo requerido para la descripción del estado de la partida  -->
                 <div class="mb-3">
                   <label for="descripcion" class="form-label"
                     >Descripción:</label

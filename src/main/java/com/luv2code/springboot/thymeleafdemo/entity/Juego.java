@@ -30,6 +30,9 @@ public class Juego {
     private String Directorio;
 
 
+    @Column(name="puntuacion")
+    private int puntuacion;
+
     @Column(name = "terminado", columnDefinition = "TINYINT(1)")
     private boolean terminado;
 
@@ -43,9 +46,6 @@ public class Juego {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date fFin;
 
-   /*  @Column(name = "terminado")
-    @Convert(converter = NumericBooleanConverter.class)
-    private boolean terminado;*/
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "juego", cascade={CascadeType.ALL})
     private List<Partida> listaPartidas;
@@ -168,13 +168,14 @@ public class Juego {
         this.fFin = fFin;
     }
 
-    /*
-    public boolean isTerminado() {
-        return terminado;
+    public int getPuntuacion() {
+        return puntuacion;
     }
 
-    public void setTerminado(boolean terminado) {
-        this.terminado = terminado;
-    }*/
+    public void setPuntuacion(int puntuacion) {
+
+        this.puntuacion = puntuacion;
+
+    }
 
 }

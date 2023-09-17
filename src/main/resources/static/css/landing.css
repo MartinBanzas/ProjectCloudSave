@@ -3,12 +3,13 @@ body {
   background: black;
   padding: 5px;
   font-family: "Roboto", sans-serif;
-
   color: white;
 }
 a {
   text-decoration: none !important;
+  color:white;
 }
+
 
 .container {
   margin-top: 10px;
@@ -26,6 +27,7 @@ margin:10px}
   max-width: 100%; /* Asegura que la imagen no sea más ancha que su contenedor */
   max-height: 100%; /* Asegura que la imagen no sea más alta que su contenedor */
   object-fit: contain; /* Mantiene la relación de aspecto y ajusta la imagen sin distorsión */
+
 }
 
 .game-title {
@@ -107,6 +109,8 @@ margin:10px}
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color:#333333;
+  color:white;
 }
 
 .card-body {
@@ -115,7 +119,9 @@ margin:10px}
   display: flex; /* Activa el modelo de caja flexible */
   align-items: center; /* Centra verticalmente el contenido */
   justify-content: center; /* Centra horizontalmente el contenido */
-  text-align: center; 
+  text-align: center;
+  background-color:#333333;
+
 }
 
 
@@ -148,9 +154,12 @@ margin:10px}
   color: white; /* Color del texto */
   font-size: 10px; /* Ajusta el tamaño de la fuente */
   transform-origin: left top; /* Punto de origen para la rotación */
-  transform: translateY(-50%) rotate(240deg) ; /* Rotar 45 grados en sentido horario */
-  left: 4%; /* Coloca la banda en el borde izquierdo */
-  top: 15%;
-  height:10%;/* Centra verticalmente la banda */
-  writing-mode: vertical-rl;
+  left: 3%; /* Coloca la banda en el borde izquierdo */
+  bottom:21%;
+
+
 }
+
+
+
+

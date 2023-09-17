@@ -14,6 +14,7 @@ public class ThymeleafFileUploadApplication implements CommandLineRunner {
 	@Resource
 	FileStorageService storageService;
 	
+
 	public static void main(String[] args) {
 		SpringApplication.run(ThymeleafFileUploadApplication.class, args);
 	}

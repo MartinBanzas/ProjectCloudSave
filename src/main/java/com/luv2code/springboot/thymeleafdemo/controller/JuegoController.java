@@ -66,7 +66,7 @@ public class JuegoController {
 		return "juegos/lista-juegos";
 	}
 
-
+//Solicitud de formAdd
 	@GetMapping("/formAdd")
 	public String formAdd(Model theModel) {
 		Juego theGame = new Juego();
@@ -91,6 +91,7 @@ public class JuegoController {
 	//Guardar un juego nuevo
 	@PostMapping("/save")
 	public String saveJuego(@ModelAttribute("juego") Juego theGame) {
+		theGame.setTerminado(false); //No puede tener nulos en esta columna o casca, o se hace así o se lanza un trigger en SQL que ponga el valor de esa columna a 0.
 		juegoService.save(theGame);
 
 		return "redirect:/juegos/lista";

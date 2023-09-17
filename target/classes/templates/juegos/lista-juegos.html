@@ -181,12 +181,11 @@
           th:each="tempJuego : ${juegos}"
           class="col-lg-2 col-md-3 col-sm-6 col-6 game-card card-with-band"
         >
-          <div class="card game-card">
+          <div class="card border-dark game-card">
 
             <!-- Imagen del juego -->
             <a
-              th:href="@{/juegos/partidas/{id}(id=${tempJuego.id},name=${tempJuego.Name})}"
-            >
+              th:href="@{/juegos/partidas/{id}(id=${tempJuego.id},name=${tempJuego.Name})}">
               <img
                 th:if="${tempJuego.Img != null}"
                 th:src="@{/juegos/img/{id}(id=${tempJuego.id})}"
@@ -203,24 +202,40 @@
                 alt="Imagen del juego"
                 class="card-img-top game-img img-fluid"
             /></a>
-
             <div class="card-body">
+              <div class="band" th:if="${tempJuego.terminado}">Done!</div>
 
               <!-- Nombre del juego -->
               <a
                 th:href="@{/juegos/partidas/{id}(id=${tempJuego.id},name=${tempJuego.Name})}"
                 th:text="${tempJuego.Name}"
-              >
-                <h5
-                  th:text="${tempJuego.Name}"
-                  class="card-title game-title"
-                ></h5
-              ></a>
+              />
+
             </div>
             <div class="card-footer">
+              <button class="btn btn small" th:id="'review-add-btn-' + ${tempJuego.id}">              <svg
+                      style="margin-right: 2px; cursor: pointer;"
+                      width="12"
+                      height="12"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="ipc-icon ipc-icon--star-inline"
+                      viewBox="0 0 24 24"
+                      fill="#ffd700"
+                      role="presentation"
+                      id="open-modal-button"
+                      data-bs-toggle="modal"
+                      data-bs-target="#reviewModal"
+              >
+              <path
+                      d="M12 20.1l5.82 3.682c1.066.675 2.37-.322 2.09-1.584l-1.543-6.926 5.146-4.667c.94-.85.435-2.465-.799-2.567l-6.773-.602L13.29.89a1.38 1.38 0 0 0-2.581 0l-2.65 6.53-6.774.602C.052 8.126-.453 9.74.486 10.59l5.147 4.666-1.542 6.926c-.28 1.262 1.023 2.26 2.09 1.585L12 20.099z"
+              ></path>
+              </svg></button>
+              <span th:text="${tempJuego.puntuacion}"></span>
               <div class="row">
+
                 <!-- Formulario para eliminar -->
                 <div class="col-6">
+
                   <form
                     th:action="@{/juegos/delete/{id}(id=${tempJuego.id})}"
                     method="post"
@@ -236,7 +251,7 @@
                         xmlns="http://www.w3.org/2000/svg"
                         width="12"
                         height="12"
-                        fill="currentColor"
+                        fill="white"
                         class="bi bi-trash3"
                         viewBox="0 0 16 16"
                       >
@@ -246,9 +261,10 @@
                       </svg>
                     </button>
                   </form>
+
                 </div>
               </div>
-
+             <!-- aquí para la estrella a la derecha-->
             </div>
 
           </div>
@@ -257,19 +273,50 @@
     </div>
 
 
+</div>
 
-    <script>
-      // Función para abrir el modal de edición
-      function openEditModal() {
-        var editModal = document.getElementById("editModal");
-        editModal.style.display = "block";
-      }
+    <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="reviewModalLabel">Add Review</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="reviewName" class="form-label">Name</label>
+                <input type="text" class="form-control" id="reviewName" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Rating</label>
+                <div class="rate">
+                  <input type="radio" id="star5" name="rate" value="5" required>
+                  <label for="star5" title="5 stars">5 stars</label>
+                  <input type="radio" id="star4" name="rate" value="4">
+                  <label for="star4" title="4 stars">4 stars</label>
+                  <input type="radio" id="star3" name="rate" value="3">
+                  <label for="star3" title="3 stars">3 stars</label>
+                  <input type="radio" id="star2" name="rate" value="2">
+                  <label for="star2" title="2 stars">2 stars</label>
+                  <input type="radio" id="star1" name="rate" value="1">
+                  <label for="star1" title="1 star">1 star</label>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="reviewComments" class="form-label">Comments</label>
+                <textarea class="form-control" id="reviewComments" rows="5" required></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-      // Función para cerrar el modal de edición
-      function closeEditModal() {
-        var editModal = document.getElementById("editModal");
-        editModal.style.display = "none";
-      }
-    </script>
+      <script src="/js/partidas.js"></script>
   </body>
 </html>

@@ -3,12 +3,13 @@ body {
   background: black;
   padding: 5px;
   font-family: "Roboto", sans-serif;
-
   color: white;
 }
 a {
   text-decoration: none !important;
+  color:white;
 }
+
 
 .container {
   margin-top: 10px;
@@ -26,6 +27,7 @@ margin:10px}
   max-width: 100%; /* Asegura que la imagen no sea más ancha que su contenedor */
   max-height: 100%; /* Asegura que la imagen no sea más alta que su contenedor */
   object-fit: contain; /* Mantiene la relación de aspecto y ajusta la imagen sin distorsión */
+
 }
 
 .game-title {
@@ -107,6 +109,8 @@ margin:10px}
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color:#333333;
+  color:white;
 }
 
 .card-body {
@@ -115,7 +119,9 @@ margin:10px}
   display: flex; /* Activa el modelo de caja flexible */
   align-items: center; /* Centra verticalmente el contenido */
   justify-content: center; /* Centra horizontalmente el contenido */
-  text-align: center; 
+  text-align: center;
+  background-color:#333333;
+
 }
 
 
@@ -130,24 +136,30 @@ margin:10px}
 
 .card-with-band {
   position: relative;
-  padding-top: 10px; /* Ajusta el espacio en la parte superior para la banda */
+  padding-top: 5px; /* Ajusta el espacio en la parte superior para la banda */
 }
 
-/* Estilo de la banda */
-.band {
-  background-color: limegreen; /* Fondo verde lima */
-  position: absolute;
-border-radius:1px;
-px;
-  left: 16px; /* La posición hacia adentro desde el borde izquierdo */
-  top:12px;
-  padding: 2px 0; /* Espaciado interno de la banda */
-  color: white; /* Color del texto */
-   /* Texto en negrita */
-  transform-origin: left top; /* Punto de origen para la rotación */
-  transform: translateY(-50%) rotate(45deg); /* Rotar 45 grados en sentido horario */
-}
+
 /* Estilos para las tarjetas */
 .card.game-card {
   position: relative; /* Para que la banda se posicione con respecto a la tarjeta */
 }
+
+.band {
+  font-family: 'Pacifico', cursive;
+  background-color: limegreen; /* Fondo verde lima */
+  position: absolute;
+  border-radius: 1px;
+  padding: 1px 3px; /* Ajusta el espaciado interno */
+  color: white; /* Color del texto */
+  font-size: 10px; /* Ajusta el tamaño de la fuente */
+  transform-origin: left top; /* Punto de origen para la rotación */
+  left: 3%; /* Coloca la banda en el borde izquierdo */
+  bottom:21%;
+
+
+}
+
+
+
+
