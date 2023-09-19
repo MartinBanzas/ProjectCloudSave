@@ -214,7 +214,8 @@
 
             </div>
             <div class="card-footer">
-              <button class="btn btn small" th:id="'review-add-btn-' + ${tempJuego.id}">              <svg
+              <button class="btn btn small review-button"  th:attr="data-game-id=${tempJuego.id}">
+                <svg
                       style="margin-right: 2px; cursor: pointer;"
                       width="12"
                       height="12"
@@ -284,38 +285,54 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form>
+            <form id="reviewForm" th:action="@{/juegos/review}" method="post">
               <div class="mb-3">
                 <label for="reviewName" class="form-label">Titular</label>
-                <input type="text" class="form-control" id="reviewName" required>
+                <input type="text" class="form-control" name="reviewName" id="reviewName" required>
               </div>
               <div class="mb-3">
                 <label class="form-label">Valoración</label>
                 <div class="rate">
-                  <input type="radio" id="star5" name="rate" value="5" required>
+                  <input type="radio" id="star5" name="rate" th:value="${rating}" th:checked="${rating = 5}"  value="5"required>
                   <label for="star5" title="5 stars">5 stars</label>
-                  <input type="radio" id="star4" name="rate" value="4">
+                  <input type="radio" id="star4" name="rate" th:value="${rating}" th:checked="${rating == 4}" value="4">
                   <label for="star4" title="4 stars">4 stars</label>
-                  <input type="radio" id="star3" name="rate" value="3">
+                  <input type="radio" id="star3" name="rate" th:value="${rating}" th:checked="${rating == 3}" value="3">
                   <label for="star3" title="3 stars">3 stars</label>
-                  <input type="radio" id="star2" name="rate" value="2">
+                  <input type="radio" id="star2" name="rate" th:value="${rating}" th:checked="${rating == 2}" value="2">
                   <label for="star2" title="2 stars">2 stars</label>
-                  <input type="radio" id="star1" name="rate" value="1">
+                  <input type="radio" id="star1" name="rate" th:value="${rating}" th:checked="${rating == 1}" value="1">
                   <label for="star1" title="1 star">1 star</label>
                 </div>
+
               </div>
               <div class="mb-3">
                 <label for="reviewComments" class="form-label">Tu review</label>
-                <textarea class="form-control" id="reviewComments" rows="5" required></textarea>
+                <textarea class="form-control" name="reviewComments" id="reviewComments" rows="5" required></textarea>
               </div>
+              <input type="hidden" id="gameId" name="gameId"/>
+              <input type="hidden" id="rating" name="rating" th:value="${rating}" />
+              <button type="submit" class="btn btn-primary">Guardar</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-primary">Guardar</button>
           </div>
         </div>
       </div>
     </div>
-    <script src="/js/landing.js"></script>  </body>
+    <script>$(document).ready(function () {
+    $(".review-button").click(function () {
+        // Obtener el valor real del atributo data-game-id
+        var gameId = $(this).data("game-id");
+
+        // Asignar gameId al campo oculto en el formulario
+        $("#reviewModal #gameId").val(gameId);
+
+        // Mostrar el modal correspondiente
+        $("#reviewModal").modal("show");
+    });
+});
+</script>
+     </body>
 </html>
