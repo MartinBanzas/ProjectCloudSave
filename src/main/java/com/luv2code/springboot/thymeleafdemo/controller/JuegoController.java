@@ -57,7 +57,7 @@ public class JuegoController {
 		String username = authentication.getName();
 
 		theModel.addAttribute("username", username);
-
+		theModel.addAttribute("rating", 5);
 		List<Juego> theGames = juegoService.findAll();
 		Juego tempJuego = new Juego();
 		// add to the spring model
@@ -169,6 +169,29 @@ public class JuegoController {
 		} catch (ParseException e) {
 			throw new RuntimeException(e);
 		}
+
+		return "redirect:/juegos/lista";
+	}
+
+	//Guardar las review
+	@PostMapping("/review")
+	public String guardarReview(@RequestParam("gameId") int gameId,
+								@RequestParam("rate") String rating,
+								@RequestParam("reviewName") String reviewName,
+								@RequestParam("reviewComments") String reviewComments) {
+
+		System.out.println(gameId);
+		System.out.println(rating);
+		System.out.println(reviewName);
+		System.out.println(reviewComments);
+		//int id = Integer.parseInt(gameId);
+
+		//Juego theGame = juegoService.findById(id);
+
+		//int p = Integer.parseInt(rating);
+		//theGame.setPuntuacion(p);
+		//juegoService.save(theGame);
+
 
 		return "redirect:/juegos/lista";
 	}
