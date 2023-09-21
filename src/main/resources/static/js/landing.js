@@ -1,10 +1,13 @@
 $(document).ready(function () {
-  // Manejar clic en el botón de revisión
-  $(".review-button").click(function () {
-    // Obtener el ID del juego del botón de revisión
-    var gameId = $(this).attr("id").replace("review-add-btn-", "");
+    $(".review-button").click(function () {
+        // Obtener el valor real del atributo data-game-id
+        var gameId = $(this).data("game-id");
 
-    // Actualizar el valor del campo gameId en el formulario del modal
-    $("#gameId").val(gameId);
-  });
+        // Asignar gameId al campo oculto en el formulario
+        $("#reviewModal #gameId").val(gameId);
+
+        // Mostrar el modal correspondiente
+        $("#reviewModal").modal("show");
+    });
 });
+

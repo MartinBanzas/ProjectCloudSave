@@ -199,3 +199,100 @@ margin:10px}
   color: #ffc700; /* Cambia el color de la estrella seleccionada */
 }
 
+.puntuacion { /*Para que salgan juntos el span de puntuación y el botón estrella*/
+margin-left:-15px;
+position:relative;
+top:3px;
+}
+
+@media screen and (max-width: 1920px) {
+
+
+
+
+
+
+
+.band {
+
+  left: 3%;
+  bottom:21%;
+
+
+}
+
+}
+
+
+@media screen and (max-width: 1380px) {
+
+
+
+
+
+
+
+.band {
+
+  left: 3%;
+  bottom:24%;
+
+
+}
+
+}
+
+
+@media screen and (max-width: 960px) {
+
+
+
+
+
+
+
+.band {
+
+  left: 3%;
+  bottom:25%;
+
+
+}
+
+}
+
+@media screen and (max-width: 768px) {
+
+
+
+
+
+
+
+.band {
+
+  left: 3%;
+  bottom:18%;
+
+
+}
+
+}
+
+@media screen and (max-width: 450px) {
+
+
+
+
+
+
+
+.band {
+
+  left: 3%;
+  bottom:21%;
+
+
+}
+
+}

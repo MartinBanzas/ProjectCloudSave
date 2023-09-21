@@ -29,7 +29,6 @@ public class Juego {
     @Column(name="Directorio")
     private String Directorio;
 
-
     @Column(name="puntuacion")
     private int puntuacion;
 
@@ -46,6 +45,12 @@ public class Juego {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date fFin;
 
+
+    @Column(name= "titulo_review", columnDefinition = "TEXT")
+    private String tituloReview;
+
+    @Column(name="review", columnDefinition = "TEXT")
+    private String review;
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "juego", cascade={CascadeType.ALL})
     private List<Partida> listaPartidas;
@@ -164,6 +169,22 @@ public class Juego {
 
     }
 
+    public String getTituloReview() {
+        return tituloReview;
+    }
+
+    public void setTituloReview(String tituloReview) {
+        this.tituloReview = tituloReview;
+    }
+
+    public String getReview() {
+        return review;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
+    }
+
     public void setfFin(Date fFin) {
         this.fFin = fFin;
     }
@@ -173,9 +194,6 @@ public class Juego {
     }
 
     public void setPuntuacion(int puntuacion) {
-
-        this.puntuacion = puntuacion;
-
-    }
+        this.puntuacion = puntuacion;}
 
 }
