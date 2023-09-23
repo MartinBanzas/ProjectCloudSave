@@ -2,8 +2,6 @@ package com.luv2code.springboot.thymeleafdemo.entity;
 
 import jakarta.persistence.*;
 
-import java.util.UUID;
-
 @Entity
 @Table(name="partidas")
 public class Partida {
@@ -62,12 +60,5 @@ public class Partida {
         this.rutaarchivo = rutaarchivo;
     }
 
-  /*  public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid() {
-        UUID timestampBasedUUID = new UUID(System.currentTimeMillis(), 0L);
-        uuid = timestampBasedUUID.toString();
-    }*/
+  
 }

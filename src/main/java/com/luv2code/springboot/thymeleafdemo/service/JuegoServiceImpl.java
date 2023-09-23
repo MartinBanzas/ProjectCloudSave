@@ -3,6 +3,8 @@ package com.luv2code.springboot.thymeleafdemo.service;
 import com.luv2code.springboot.thymeleafdemo.dao.JuegoRepository;
 import com.luv2code.springboot.thymeleafdemo.entity.Juego;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -54,5 +56,10 @@ public class JuegoServiceImpl  implements JuegoService {
     @Override
     public List<Juego> findByNombreContainingIgnoreCase(String nombre) {
        return juegoRepository.findByNameContainingIgnoreCase(nombre);
+    }
+
+    @Override
+    public Page<Juego> findAll(Pageable pageable) {
+        return juegoRepository.findAllByOrderByNameAsc(pageable);
     }
 }

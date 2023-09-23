@@ -11,10 +11,10 @@
 	</parent>
 	
 	<groupId>com.luv2code.springboot</groupId>
-	<artifactId>thymeleafdemo</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>thymeleafdemo</name>
-	<description>Demo project for Spring Boot</description>
+	<artifactId>ProjectCloudSave</artifactId>
+	<version>1.03</version>
+	<name>ProjectCloudSave</name>
+	<description>Proyecto de biblioteca de juegos</description>
 	<packaging>jar</packaging>
 	<properties>
 		<java.version>17</java.version>

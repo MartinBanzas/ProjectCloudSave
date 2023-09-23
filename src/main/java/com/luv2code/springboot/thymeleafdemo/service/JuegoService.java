@@ -4,8 +4,13 @@ import com.luv2code.springboot.thymeleafdemo.entity.Juego;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 
 public interface JuegoService {
+
+    Page<Juego> findAll(Pageable pageable);
 
     List<Juego> findAll();
 

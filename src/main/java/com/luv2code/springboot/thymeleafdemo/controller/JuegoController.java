@@ -1,5 +1,6 @@
 package com.luv2code.springboot.thymeleafdemo.controller;
 
+import com.luv2code.springboot.thymeleafdemo.entity.Img;
 import com.luv2code.springboot.thymeleafdemo.entity.Juego;
 import com.luv2code.springboot.thymeleafdemo.entity.Partida;
 import com.luv2code.springboot.thymeleafdemo.service.FileStorageService;
@@ -7,6 +8,9 @@ import com.luv2code.springboot.thymeleafdemo.service.JuegoService;
 import com.luv2code.springboot.thymeleafdemo.service.PartidaService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -15,8 +19,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/juegos")
@@ -30,27 +37,45 @@ public class JuegoController {
 	@Autowired
 	private FileStorageService storageService;
 
-/* Controlador para vista paginada...en desarrollo
 	@GetMapping("/lista")
-	public String listJuegos(Model theModel) {
+	public String listJuegos(
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "12") int size,
+			Model theModel
+	) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Pageable pageable = PageRequest.of(page, size);
 
-		List<Juego> theGames = juegoService.findAll();
+		// Recupera una página de juegos en lugar de una lista
+		Page<Juego> juegosPage = juegoService.findAll(pageable);
+		List<Juego> juegos = juegosPage.getContent();
+
 		Juego tempJuego = new Juego();
+		String username = authentication.getName();
+		theModel.addAttribute("username", username);
+		theModel.addAttribute("rating", "");
+		theModel.addAttribute("juegos", juegos);
+		theModel.addAttribute("tempJuego", tempJuego);
+		int maxPagesToShow = 3; // Número máximo de páginas para mostrar a la vez
+		int totalPages = juegosPage.getTotalPages();
+		int startPage = Math.max(0, page - maxPagesToShow / 2);
+		int endPage = Math.min(totalPages - 1, startPage + maxPagesToShow - 1);
+		theModel.addAttribute("currentPage", page);
+		theModel.addAttribute("totalPages", totalPages);
 
-		List<List<Juego>> grupoJuegos = new ArrayList<>();
-		for (int i = 0; i < theGames.size(); i += 12) {
-			int fin = Math.min(i + 12, theGames.size());
-			grupoJuegos.add(theGames.subList(i, fin));
-		}
-		// add to the spring model
-		theModel.addAttribute("grupoJuegos", grupoJuegos);
-		theModel.addAttribute("tempJuego", tempJuego); // Hay que añadir un juego estándar al Modelo, vacío, para que no rompa con el forms modal de edición
+		// Genera la lista de números de página
+		List<Integer> pageNumbers = IntStream.rangeClosed(startPage, endPage)
+				.boxed()
+				.collect(Collectors.toList());
+
+		theModel.addAttribute("pageNumbers", pageNumbers);
+
 		return "juegos/lista-juegos";
-	}*/
+	}
 
 
 	/* Función de get de todos los juegos almacenados en la BD.*/
-	@GetMapping("/lista")
+	/*@GetMapping("/lista")
 	public String listJuegos(Model theModel) {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -64,7 +89,7 @@ public class JuegoController {
 		theModel.addAttribute("juegos", theGames);
 		theModel.addAttribute("tempJuego", tempJuego); // Hay que añadir un juego estándar al Modelo, vacío, para que no rompa con el forms modal de edición
 		return "juegos/lista-juegos";
-	}
+	}*/
 
 //Solicitud de formAdd
 	@GetMapping("/formAdd")
@@ -124,11 +149,17 @@ public class JuegoController {
 			List<Partida> partidas = juego.getListaPartidas();
 
 			for (Partida partida : partidas) {
-				// Eliminar el archivo asociado a la partida usando tu servicio de archivos
 				storageService.delete(partida.getRutaarchivo());
 			}
-			String rutaImg = juego.getImg().getName();
-			storageService.deleteImg(rutaImg);
+
+			Img img = juego.getImg(); 
+
+			if (img != null) { // Hay que tratar los nulos o romperá al intentar borrar un juego que no tenga imagen asociada, al ser null.
+				String rutaImg = img.getName();
+				System.out.printf(rutaImg);
+				storageService.deleteImg(rutaImg);
+			}
+
 
 			juegoService.deleteById(id);
 

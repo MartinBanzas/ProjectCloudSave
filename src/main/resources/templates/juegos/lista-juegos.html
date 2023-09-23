@@ -322,7 +322,35 @@
         </div>
       </div>
     </div>
+
+    <footer class="footer">
+      <ul class="pagination justify-content-center">
+        <!-- Botón "Anterior" -->
+        <li th:if="${currentPage > 0}" class="page-item">
+          <a class="page-link" th:href="@{/juegos/lista?(page=${currentPage - 1})}">Anterior</a>
+        </li>
+
+        <!-- Botones de páginas -->
+        <li th:each="pageNumber : ${pageNumbers}" class="page-item" th:class="${pageNumber == currentPage ? 'active' : ''}">
+          <a class="page-link" th:href="@{/juegos/lista(page=${pageNumber})}" th:text="${pageNumber + 1}"></a>
+        </li>
+
+        <!-- Botón para ir a la última página -->
+        <li th:if="${currentPage < totalPages - 1}" class="page-item">
+          <a class="page-link" th:href="@{/juegos/lista?(page=${totalPages - 1})}">Última</a>
+        </li>
+
+        <!-- Botón "Siguiente" -->
+        <li th:if="${currentPage < totalPages - 1}" class="page-item">
+          <a class="page-link" th:href="@{/juegos/lista?(page=${currentPage + 1})}">Siguiente</a>
+        </li>
+      </ul>
+
+
+      </div>
+    </footer>
        <script src="/js/landing.js"></script>
-</script>
+
+
      </body>
 </html>
