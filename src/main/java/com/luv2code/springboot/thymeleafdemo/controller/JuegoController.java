@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -115,6 +114,7 @@ public class JuegoController {
 
 	//Guardar un juego nuevo
 	@PostMapping("/save")
+	@Transactional
 	public String saveJuego(@ModelAttribute("juego") Juego theGame) {
 		theGame.setTerminado(false); //No puede tener nulos en esta columna o casca, o se hace así o se lanza un trigger en SQL que ponga el valor de esa columna a 0.
 		juegoService.save(theGame);

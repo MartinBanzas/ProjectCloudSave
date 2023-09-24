@@ -22,6 +22,7 @@ a {
 .game-card {
   margin-bottom: 10px;
   font-size: 13px;
+  position: relative;
 }
 
 .game-card .card .game-img {
@@ -158,19 +159,15 @@ a {
   font-family: "Pacifico", cursive;
   background-color: limegreen;
   /* Fondo verde lima */
+  bottom: 72px;
   position: absolute;
-  border-radius: 1px;
-  padding: 1px 3px;
-  /* Ajusta el espaciado interno */
+
+  left: 5px;
+  background-color: #28a745; /* Color de fondo */
   color: white;
-  /* Color del texto */
+  padding: 2px 6px;
   font-size: 10px;
-  /* Ajusta el tamaño de la fuente */
-  transform-origin: left top;
-  /* Punto de origen para la rotación */
-  left: 3%;
-  /* Coloca la banda en el borde izquierdo */
-  bottom: 21%;
+  border-radius: 1px;
 }
 
 .rate {
@@ -227,68 +224,25 @@ a {
   top: 3px;
 }
 
-@media screen and (max-width: 1400px) {
-  .band {
-    left: 3%;
-    bottom: 24%;
-  }
-}
-
-
-@media screen and (max-width: 1200px) {
-  .band {
-    left: 3%;
-    bottom: 27%;
-  }
-}
-
-@media screen and (max-width: 800px) {
-  .band {
-    left: 3%;
-    bottom: 24%;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .band {
-    left: 3%;
-    bottom: 18%;
-  }
-}
-
-@media screen and (max-width: 450px) {
-  .band {
-    left: 3%;
-    bottom: 21%;
-  }
-}
-
-/*Pantalla de mi móvil*/
-@media screen and (max-width: 400px) {
-  .band {
-    left: 3%;
-    bottom: 23%;
-  }
-
-}
-
-
 .pagination {
-  background-color: #333333;
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
+  position: relative;
+
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .page-link {
   background-color: #333333;
-color:white;
+  color: white;
 }
 
+.pagination > .active > a {
+  color: white;
+  background-color: darkorange;
+  border: solid 1px darkorange;
+}
 
-
-.page-item.active  {
-    background-color: green; /* Cambia "blue" al color deseado */
-    color: white; /* Cambia "white" al color deseado para el texto */
+.navi {
+  display: inline-flex;
+  align-items: center;
 }
