@@ -15,7 +15,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,7 +27,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 
-@Controller
+@RestController
 @RequestMapping("/juegos")
 public class FileController {
 
@@ -38,7 +37,7 @@ public class FileController {
     private ImgService imgService;
 
     @Autowired
- private  FileStorageService storageService;
+    private  FileStorageService storageService;
 
     @Autowired
     private JuegoService juegoService;

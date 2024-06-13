@@ -6,17 +6,19 @@ import com.luv2code.springboot.thymeleafdemo.entity.Partida;
 import com.luv2code.springboot.thymeleafdemo.service.FileStorageService;
 import com.luv2code.springboot.thymeleafdemo.service.JuegoService;
 import com.luv2code.springboot.thymeleafdemo.service.PartidaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,8 +26,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-@Controller
+@RestController
 @RequestMapping("/juegos")
+@Tag(name = "Games", description = "For every interaction related to game listings")
 public class JuegoController {
 
 	@Autowired
@@ -36,7 +39,7 @@ public class JuegoController {
 	private FileStorageService storageService;
 
 	// Recupera una página de juegos en lugar de una lista
-
+	@Operation(summary = "Get a hello message", description = "Returns a simple hello message")
 	@GetMapping("/lista")
 	public String listJuegos(
 			@RequestParam(name = "page", defaultValue = "0") int page,
@@ -71,26 +74,23 @@ public class JuegoController {
 		return "juegos/lista-juegos";
 	}
 
-	/* Función de get de todos los juegos almacenados en la BD. */
-	/*
-	 * @GetMapping("/lista")
-	 * public String listJuegos(Model theModel) {
-	 * 
-	 * Authentication authentication =
-	 * SecurityContextHolder.getContext().getAuthentication();
-	 * String username = authentication.getName();
-	 * 
-	 * theModel.addAttribute("username", username);
-	 * theModel.addAttribute("rating", "");
-	 * List<Juego> theGames = juegoService.findAll();
-	 * Juego tempJuego = new Juego();
-	 * // add to the spring model
-	 * theModel.addAttribute("juegos", theGames);
-	 * theModel.addAttribute("tempJuego", tempJuego); // Hay que añadir un juego
-	 * estándar al Modelo, vacío, para que no rompa con el forms modal de edición
-	 * return "juegos/lista-juegos";
-	 * }
-	 */
+
+	  @GetMapping("/all")
+	  public ResponseEntity <List<Juego>> listJuegos() {
+
+		  Authentication authentication =
+				  SecurityContextHolder.getContext().getAuthentication();
+		  String username = authentication.getName();
+
+
+		  List<Juego> theGames = juegoService.findAll();
+		  Juego tempJuego = new Juego();
+
+
+		return ResponseEntity.ok().body(theGames);
+
+
+	  }
 
 	// Solicitud de formAdd
 	@GetMapping("/formAdd")
@@ -174,18 +174,13 @@ public class JuegoController {
 
 	// Función de búsqueda por nombre/string
 	@GetMapping("/buscar")
-	public String buscarJuegos(@RequestParam String nombre, Model model) {
+	public ResponseEntity<List<Juego>> buscarJuegos(@RequestParam String nombre) {
 		List<Juego> juegosEncontrados = juegoService.findByNombreContainingIgnoreCase(nombre);
 
-		model.addAttribute("juegos", juegosEncontrados);
-		Juego tempJuego = new Juego();
-		model.addAttribute("tempJuego", tempJuego);
-
 		if (juegosEncontrados.isEmpty()) {
-			return "juegos/no-encontrado";
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
-
-		 return "juegos/lista-juegos";
+		return ResponseEntity.ok(juegosEncontrados);
 	}
 
 	// Función de marcar completado
@@ -201,8 +196,8 @@ public class JuegoController {
 		try {
 			Date fInicio = inputDateFormat.parse(fechaInicio);
 			Date fFin = inputDateFormat.parse(fechaFin);
-			theGame.setfInicio(fInicio);
-			theGame.setfFin(fFin);
+			theGame.setFInicio(fInicio);
+			theGame.setFFin(fFin);
 			theGame.setTerminado(true);
 			juegoService.save(theGame);
 
