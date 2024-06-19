@@ -2,76 +2,32 @@ package com.martin.springboot.cloudsave.db_entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-@Setter
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name="juego")
 public class Juego {
 
-    @Getter
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name="id")
-    private int id;
-
-    @Getter
-    @Column(name="Nombre")
-    private String name;
-
-    @Getter
-    @Column(name="Sistema")
-    private String Sistema;
-
-    @Getter
-    @Column(name="Directorio")
-    private String Directorio;
-
-    @Getter
-    @Column(name="puntuacion")
-    private int puntuacion;
-
-    @Getter
-    @Column(name = "terminado", columnDefinition = "TINYINT(1)")
-    private boolean terminado;
-
-    @Column(name = "fInicio")
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private Date fInicio;
-
-    @Column(name = "fFin")
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private Date fFin;
-
-
-    @Getter
-    @Column(name= "titulo_review", columnDefinition = "TEXT")
-    private String tituloReview;
-
-    @Getter
-    @Column(name="review", columnDefinition = "TEXT")
-    private String review;
-
-    @Getter
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "juego", cascade={CascadeType.ALL})
-    @JsonIgnore
-    private List<Partida> listaPartidas;
-
-    @Getter
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "juego", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private Img img;
-
-
-    public Juego() {}
+    @Id @GeneratedValue(strategy= GenerationType.IDENTITY) @Column(name="id") private int id;
+    @Column(name="Nombre") private String name;
+    @Column(name="Sistema") private String Sistema;
+    @Column(name="Directorio") private String Directorio;
+    @Column(name="puntuacion") private int puntuacion;
+    @Column(name = "terminado", columnDefinition = "TINYINT(1)") private boolean terminado;
+    @Column(name = "fInicio") @Temporal(TemporalType.DATE) @DateTimeFormat(pattern = "dd/MM/yyyy") private Date fInicio;
+    @Column(name = "fFin") @Temporal(TemporalType.DATE) @DateTimeFormat(pattern = "dd/MM/yyyy") private Date fFin;
+    @Column(name= "titulo_review", columnDefinition = "TEXT") private String tituloReview;
+    @Column(name="review", columnDefinition = "TEXT") private String review;
+    @Column(name="img_Path") private String imgPath;
+   // @JsonIgnore @OneToMany(fetch = FetchType.LAZY,mappedBy = "juego", cascade={CascadeType.ALL}) private List<Partida> listaPartidas;
 
     public Juego(String name, String sistema, String directorio) {
         this.name = name;
@@ -90,15 +46,4 @@ public class Juego {
                 ", ultimaActu="  +
                 '}';
     }
-
-    public void add(Partida tempPartida) {
-
-        if (listaPartidas == null) {
-            listaPartidas=new ArrayList<>();
-        }
-        listaPartidas.add(tempPartida);
-        tempPartida.setJuego(this);
-}
-
-
 }

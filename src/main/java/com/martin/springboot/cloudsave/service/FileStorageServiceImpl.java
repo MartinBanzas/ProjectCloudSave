@@ -20,6 +20,7 @@ public class FileStorageServiceImpl implements  FileStorageService{
     private final Path imgDir = Paths.get("./img");
 
     private final Path root = Paths.get("./uploads");
+
     @Override
     public void init() {
 

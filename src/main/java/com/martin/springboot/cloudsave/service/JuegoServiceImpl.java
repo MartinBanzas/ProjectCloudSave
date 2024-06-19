@@ -13,9 +13,10 @@ import java.util.Optional;
 @Service
 public class JuegoServiceImpl  implements JuegoService {
 
-    private JuegoRepository juegoRepository;
+   @Autowired
+   final private JuegoRepository juegoRepository;
 
-    @Autowired
+
     public JuegoServiceImpl (JuegoRepository juegoRepository) {
         this.juegoRepository=juegoRepository;
     }
@@ -28,7 +29,6 @@ public class JuegoServiceImpl  implements JuegoService {
     @Override
     public Juego findById(int theId) {
         Optional<Juego> result = juegoRepository.findById(theId);
-
         Juego theGame = null;
 
         if (result.isPresent()) {
@@ -54,7 +54,7 @@ public class JuegoServiceImpl  implements JuegoService {
 
     @Override
     public List<Juego> findByNombreContainingIgnoreCase(String nombre) {
-       return juegoRepository.findByNameContainingIgnoreCase(nombre);
+        return juegoRepository.findByNameContainingIgnoreCase(nombre);
     }
 
     @Override

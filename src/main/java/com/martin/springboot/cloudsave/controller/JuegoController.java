@@ -1,12 +1,9 @@
 package com.martin.springboot.cloudsave.controller;
 
-import com.martin.springboot.cloudsave.db_entities.Img;
 import com.martin.springboot.cloudsave.db_entities.Juego;
-import com.martin.springboot.cloudsave.db_entities.Partida;
 import com.martin.springboot.cloudsave.json_schemas.JuegoAddDTO;
 import com.martin.springboot.cloudsave.service.FileStorageService;
 import com.martin.springboot.cloudsave.service.JuegoService;
-import com.martin.springboot.cloudsave.service.PartidaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
@@ -27,19 +24,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+@CrossOrigin(origins="http://localhost:3000")
 @RestController
 @RequestMapping("/juegos")
 @Tag(name = "Games", description = "For every interaction related to game listings")
 public class JuegoController {
 
 	@Autowired
-	private JuegoService juegoService;
-	@Autowired
-	private PartidaService partidaService;
-	@Autowired
+	private JuegoService juegoService;	@Autowired
 	private FileStorageService storageService;
 
-	// Recupera una página de juegos en lugar de una lista
+	// Recupera una página de juegos en lugar de una lista, rémora de cuando el proyecto servía plantillas HTML
 	@Operation(summary = "Get a paginated  list", description = "Returns a list of games by pages")
 	@GetMapping("/lista")
 	public String listJuegos(
@@ -74,6 +69,7 @@ public class JuegoController {
 
 		return "juegos/lista-juegos";
 	}
+
 
 
 	@Operation(summary = "Get a game's list", description = "Returns the full list of games")
@@ -115,10 +111,9 @@ public class JuegoController {
 
 		Juego theGame = juegoService.findById(id);
 
-		List<Partida> listaPartidas = partidaService.findAll();
 
-		theModel.addAttribute("partida", listaPartidas);
-		theModel.addAttribute("juego", theGame);
+
+
 
 		return "juegos/partidas";
 	}
@@ -136,7 +131,7 @@ public class JuegoController {
 
 
 	@Operation(summary = "Updates a game's basic parameters", description = "Updates name, system, directory")
-	@PostMapping("update/{id}")
+	@PatchMapping("update/{id}")
 	@Transactional
 	public ResponseEntity <String> updateJuego(@PathVariable("id") int id, @RequestParam("name") String name,
 			@RequestParam("sistema") String sistema, @RequestParam("directorio") String directorio) {
@@ -158,20 +153,16 @@ public class JuegoController {
 		Juego juego = juegoService.findById(id);
 
 		if (juego != null) {
-			List<Partida> partidas = juego.getListaPartidas();
+			//List<Partida> partidas = juego.getListaPartidas();
 
-			for (Partida partida : partidas) {
-				storageService.delete(partida.getRutaarchivo());
-			}
+			//for (Partida partida : partidas) {
+			//	storageService.delete(partida.getRutaarchivo());
+			//}
 
-			Img img = juego.getImg();
-
-			if (img != null) { // Hay que tratar los nulos o romperá al intentar borrar un juego que no tenga
+			 // Hay que tratar los nulos o romperá al intentar borrar un juego que no tenga
 								// imagen asociada, al ser null.
-				String rutaImg = img.getName();
-				System.out.printf(rutaImg);
+				String rutaImg = juego.getImgPath();
 				storageService.deleteImg(rutaImg);
-			}
 
 			juegoService.deleteById(id);
 

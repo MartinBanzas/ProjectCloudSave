@@ -10,23 +10,15 @@ import java.util.stream.Stream;
 
 public interface FileStorageService {
 
-    public void init();
-
-    public void save(MultipartFile file, String uniqueFileName);
-
-    public void saveImg(MultipartFile file);
-
-    public Resource load(String filename);
-
-    public Resource loadImg(String filename);
-
-    public boolean delete(String filename);
-
-    public boolean deleteImg(String filename);
-
-    public void deleteAll();
-
-    public Stream<Path> loadAll();
+     void init();
+     void save(MultipartFile file, String uniqueFileName);
+     void saveImg(MultipartFile file);
+     Resource load(String filename);
+     Resource loadImg(String filename);
+     boolean delete(String filename);
+     boolean deleteImg(String filename);
+     void deleteAll();
+     Stream<Path> loadAll();
 
 
 

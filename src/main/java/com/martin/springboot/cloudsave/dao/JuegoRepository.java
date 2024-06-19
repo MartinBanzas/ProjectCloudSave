@@ -10,9 +10,7 @@ import java.util.List;
 
 public interface JuegoRepository extends JpaRepository<Juego, Integer> {
 
-    public List<Juego> findAllByOrderByNameAsc();
-
-    public List<Juego> findByNameContainingIgnoreCase(String nombre);
-
-    public Page<Juego> findAllByOrderByNameAsc(Pageable pageable);
+     List<Juego> findAllByOrderByNameAsc();
+     List<Juego> findByNameContainingIgnoreCase(String nombre);
+     Page<Juego> findAllByOrderByNameAsc(Pageable pageable);
 }
