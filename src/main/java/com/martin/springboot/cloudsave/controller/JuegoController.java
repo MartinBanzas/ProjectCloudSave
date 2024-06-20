@@ -2,6 +2,7 @@ package com.martin.springboot.cloudsave.controller;
 
 import com.martin.springboot.cloudsave.db_entities.Juego;
 import com.martin.springboot.cloudsave.json_schemas.JuegoAddDTO;
+import com.martin.springboot.cloudsave.json_schemas.ReviewAddDTO;
 import com.martin.springboot.cloudsave.service.FileStorageService;
 import com.martin.springboot.cloudsave.service.JuegoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -72,7 +73,7 @@ public class JuegoController {
 
 
 
-	@Operation(summary = "Get a game's list", description = "Returns the full list of games")
+	@Operation(summary = "Get a list of games", description = "Returns the full list of games")
 	@GetMapping("/all")
 	  public ResponseEntity <List<Juego>> listJuegos() {
 
@@ -206,20 +207,21 @@ public class JuegoController {
 		return ResponseEntity.ok("Game updated successfully");
 	}
 
+	@Transactional
 	@Operation(summary = "Adds reviews", description = "Adds review for the specified game")
 	@PostMapping("/review")
-	public ResponseEntity <String> guardarReview(@RequestParam("gameId") int gameId,
-			@RequestParam("rate") int rating,
-			@RequestParam("reviewName") String reviewName,
-			@RequestParam("reviewComments") String reviewComments) {
+	public ResponseEntity <String> guardarReview(@RequestBody ReviewAddDTO reviewAddDTO){
 
-		Juego theGame = juegoService.findById(gameId);
-		theGame.setPuntuacion(rating);
-		theGame.setReview(reviewComments);
-		theGame.setTituloReview(reviewName);
-		juegoService.save(theGame);
-
-		return ResponseEntity.ok("Review added successfully");
+		try {
+			Juego theGame = juegoService.findById(reviewAddDTO.getGameId());
+			theGame.setPuntuacion(reviewAddDTO.getRate());
+			theGame.setReview(reviewAddDTO.getReviewComments());
+			theGame.setTituloReview(reviewAddDTO.getReviewName());
+			juegoService.save(theGame);
+			return ResponseEntity.ok("Review added successfully");
+		} catch (Exception e) {
+			return ResponseEntity.ok(e.toString());
+		}
 	}
 
 }
