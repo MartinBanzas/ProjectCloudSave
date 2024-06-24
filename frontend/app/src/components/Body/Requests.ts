@@ -7,9 +7,11 @@ export const getGames = async () => {
     const response = await fetch(`${API_BASE_URL}${GET_JUEGOS}`, {
       method: "GET",
     });
+   
     if (!response.ok) {
       throw new Error("Error fetching logs");
     }
+   
     return response.json();
   } catch (error: any) {
     return error;

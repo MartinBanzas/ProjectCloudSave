@@ -15,7 +15,7 @@ export const ModalReview: React.FC<ModalReviewProps> = ({ modalReview, setModalR
     reviewComments: '',
   });
 
-  console.log(gameId);
+ 
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;

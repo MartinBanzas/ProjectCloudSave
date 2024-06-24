@@ -1,4 +1,4 @@
-import './NavBar.css'
+import '../Body/css/NavBar.css'
 
 export const NavBar = () => {
   const style = {
@@ -122,8 +122,7 @@ export const NavBar = () => {
             </div>
             <div className="modal-body">
               <p>
-                Web app desarrollada por Martín Antelo Jallas, estudiante de 2º
-                de DAW en A Coruña. Hecha con Java/Spring Boot, Thymeleaf y
+                Web app desarrollada por Martín Antelo Jallas. Hecho en React.
                 MySQL. Atribuciones: Flaticon
               </p>
             </div>

@@ -1,22 +1,26 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { getGames as getGamesFromAPI, getImg } from "./Requests";
 import GameModel from "../../models/Models";
-import "./GameList.css";
+import "./css/GameList.css";
 import star from "../../static/icons/star.svg"
 import placeholder from "../../../src/static/img/placeholder.png"
 
 import { ModalReview } from "./modals/ModalReview";
+import { GameInfo } from "./modals/GameInfo";
 
 
 export const GameList = () => {
   const [games, setGames] = useState<GameModel[]>([]);
   const [gamesImg, setGamesImg] = useState<{ [key: number]: string }>({});
-  const [modalReview, setModalReview]= useState<boolean>(false)
+  const [reviewModal, setReviewModal]= useState<boolean>(false)
+  const [gameInfoModal, setGameInfoModal]= useState<boolean>(false)
   const [selectedGameId, setSelectedGameId]=useState<number>();
+  const [selectedGameInfo, setSelectedGameInfo]=useState<GameModel>();
 
   const obtainGameListCallback = useCallback(async () => {
     const data = await getGamesFromAPI();
     setGames(data);
+   
   }, []);
 
   useEffect(() => {
@@ -42,9 +46,11 @@ export const GameList = () => {
   }, [games, obtainImagesCallback]);
 
 
-  const handleClick = (gameId:number) => {
-    setModalReview(true);
+  const handleClick = (gameId: number, event: React.MouseEvent<HTMLButtonElement | HTMLImageElement>) => {
     setSelectedGameId(gameId)
+    const gameInfo = games.find((game) => game.id === gameId);
+    setSelectedGameInfo(gameInfo);
+    event?.currentTarget.id==="review" ? setReviewModal(true) : setGameInfoModal(true)
   }
 
   return (
@@ -58,6 +64,7 @@ export const GameList = () => {
           >
             <div className="card border-dark game-card">
               <img
+              onClick={(event) =>handleClick(game.id, event)}
                 src={
                   gamesImg[game.id] != null
                     ? gamesImg[game.id]
@@ -68,10 +75,10 @@ export const GameList = () => {
               />
               <div className="card-body ">
                 {game.terminado ? <div className="band">Done!</div> : null}
-                <span className="game-name mb-2">{game.name}</span>
+                <span onClick={()=>setGameInfoModal(true)} className="game-name mb-2">{game.name}</span>
                 <div className="card-footer">
                   <div className="buttonYreview">
-                    <button  onClick={()=>handleClick(game.id)} className="btn btn text-dark small review-button">
+                  <button id="review" onClick={(event) => handleClick(game.id, event)} className="btn btn text-dark small review-button">
                     <img src={star} className="starIcon" height="16px" width="16px"></img>
                     </button>
                     <span className="puntuacion text-white">{game.puntuacion}</span>
@@ -82,7 +89,9 @@ export const GameList = () => {
           </div>
         ))}
       </div>
-      <ModalReview modalReview={modalReview} setModalReview={setModalReview} gameId={selectedGameId!}/>
+      {selectedGameInfo ? <GameInfo gameInfo={selectedGameInfo!} setShowModal={setGameInfoModal} showModal={gameInfoModal}/> : null }
+      
+      <ModalReview gameId={selectedGameId!} modalReview={reviewModal} setModalReview={setReviewModal} />
     </div>
   );
 };
