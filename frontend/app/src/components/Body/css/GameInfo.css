@@ -1,0 +1,49 @@
+.modal-header {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .modal-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .modal-body {
+    background-color: #f8f9fa;
+  }
+  
+  .game-info-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .game-info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .game-info-label {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .game-info-value {
+    color: #555;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.875rem;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+  }
+
+  
