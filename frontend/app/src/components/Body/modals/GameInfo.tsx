@@ -2,6 +2,7 @@ import GameModel from "../../../models/Models";
 import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import "../css/GameInfo.css"; // Asegúrate de importar el archivo CSS
+import { HLTB } from "../../../requests/HowLongToBeat";
 
 
 interface GameInfoProps {
@@ -15,6 +16,9 @@ export const GameInfo: React.FC<GameInfoProps> = ({
   setShowModal,
   gameInfo,
 }) => {
+
+
+
   const formatDate = (date:Date) => {
     return new Date(date).toLocaleDateString("en-GB");
    };

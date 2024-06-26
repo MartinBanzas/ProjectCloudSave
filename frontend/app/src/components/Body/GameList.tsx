@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { getGames as getGamesFromAPI, getImg } from "./Requests";
+import { getGames as getGamesFromAPI, getImg } from "../../requests/Requests";
 import GameModel from "../../models/Models";
 import "./css/GameList.css";
 import star from "../../static/icons/star.svg"

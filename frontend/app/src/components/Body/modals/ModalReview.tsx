@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal } from 'react-bootstrap';
-import { addReview } from '../Requests';
+import { addReview } from '../../../requests/Requests';
 
 interface ModalReviewProps {
   modalReview: boolean | undefined;
@@ -38,9 +38,6 @@ export const ModalReview: React.FC<ModalReviewProps> = ({ modalReview, setModalR
     }
   };
 
-  useEffect(() => {
-    console.log('Rate changed:', review.rate);
-  }, [review.rate]);
 
   return (
     <Modal show={modalReview} onHide={() => setModalReview(false)}>
