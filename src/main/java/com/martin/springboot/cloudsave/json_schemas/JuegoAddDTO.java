@@ -13,7 +13,11 @@ public class JuegoAddDTO {
 
     private String name;
     private String Sistema;
-    private String Directorio;
+    private String main;
+    private String main_extra;
+    private String completionist;
+    private String company;
+    private String year;
 
 }
 

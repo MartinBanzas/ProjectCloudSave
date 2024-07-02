@@ -1,9 +1,7 @@
 import GameModel from "../../../models/Models";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Modal } from "react-bootstrap";
 import "../css/GameInfo.css"; // Asegúrate de importar el archivo CSS
-import { HLTB } from "../../../requests/HowLongToBeat";
-
 
 interface GameInfoProps {
   gameInfo: GameModel;
@@ -16,17 +14,13 @@ export const GameInfo: React.FC<GameInfoProps> = ({
   setShowModal,
   gameInfo,
 }) => {
-
-
-
-  const formatDate = (date:Date) => {
+  const formatDate = (date: Date) => {
     return new Date(date).toLocaleDateString("en-GB");
-   };
+  };
 
-
-   return (
+  return (
     <Modal show={showModal} onHide={() => setShowModal(false)}>
-      <Modal.Header closeButton className="modal-header">
+      <Modal.Header closeButton className="">
         <h5 className="modal-title" id="reviewModalLabel">
           {gameInfo?.name}
         </h5>
@@ -46,20 +40,59 @@ export const GameInfo: React.FC<GameInfoProps> = ({
           {gameInfo.finicio && (
             <li className="game-info-item">
               <span className="game-info-label">Empezado el:</span>
-              <span className="game-info-value">{formatDate(gameInfo.finicio)}</span>
+              <span className="game-info-value">
+                {formatDate(gameInfo.finicio)}
+              </span>
             </li>
           )}
           {gameInfo.ffin && (
             <li className="game-info-item">
               <span className="game-info-label">Finalizado el:</span>
-              <span className="game-info-value">{formatDate(gameInfo.ffin)}</span>
+              <span className="game-info-value">
+                {formatDate(gameInfo.ffin)}
+              </span>
             </li>
           )}
+          {gameInfo.company && (
+            <li className="game-info-item">
+              <span className="game-info-label">Compañía:</span>
+              <span className="game-info-value">{gameInfo.company}</span>
+            </li>
+          )}
+          {gameInfo.year && (
+            <li className="game-info-item">
+              <span className="game-info-label">Año:</span>
+              <span className="game-info-value">{gameInfo.year}</span>
+            </li>
+          )}
+
+          {gameInfo.main && (
+            <li className="game-info-item">
+              <span className="game-info-label">Juego principal:</span>
+              <span className="game-info-value">{gameInfo.main}</span>
+            </li>
+          )}
+
+          {gameInfo.main_extra && (
+            <li className="game-info-item">
+              <span className="game-info-label">Principal + Extra:</span>
+              <span className="game-info-value">{gameInfo.main_extra}</span>
+            </li>
+          )}
+
+
+          {gameInfo.completionist && (
+            <li className="game-info-item">
+              <span className="game-info-label">Completista</span>
+              <span className="game-info-value">{gameInfo.completionist}</span>
+            </li>
+          )}
+
           {gameInfo.review && (
             <li className="game-info-item">
-            <span className="game-info-label">{gameInfo.tituloReview}</span>
-            <span className="game-info-value">{gameInfo.review}</span>
-          </li>
+              <span className="game-info-label">{gameInfo.tituloReview}</span>
+              <span className="game-info-value">{gameInfo.review}</span>
+            </li>
           )}
         </ul>
       </Modal.Body>

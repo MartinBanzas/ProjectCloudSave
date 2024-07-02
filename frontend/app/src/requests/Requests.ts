@@ -7,11 +7,11 @@ export const getGames = async () => {
     const response = await fetch(`${API_BASE_URL}${GET_JUEGOS}`, {
       method: "GET",
     });
-   
+
     if (!response.ok) {
       throw new Error("Error fetching logs");
     }
-   
+
     return response.json();
   } catch (error: any) {
     return error;
@@ -31,27 +31,80 @@ export const getImg = async (id: number) => {
   }
 };
 
-export const addGame = async (
-  name: string,
-  directorio: string,
-  sistema: string
-) => {
+export const addGame = async (name: string, sistema: string, hltb: any) => {
   const ADD_GAME = "juegos/addGame";
+  const data = {
+    name,
+    sistema,
+    main: hltb.game_main,
+    main_extra: hltb.game_extra,
+    completionist: hltb.game_completionist,
+    year: hltb.year,
+    company: hltb.company,
+  };
 
-  const data = { name, directorio, sistema };
+  console.log(data);
 
   try {
     const response = await fetch(`${API_BASE_URL}${ADD_GAME}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
       method: "POST",
       body: JSON.stringify(data),
     });
+
     if (response.ok) {
       return "Añadido con éxito";
+    } else {
+      console.error("Error adding game:", response.status, response.statusText);
+      return `Error: ${response.status} ${response.statusText}`;
     }
   } catch (error: any) {
     console.error("Error adding game:", error);
     return `Error: ${error.message}`;
   }
+};
+
+export const hltbRequest = async (gameName: string) => {
+  const url = `http://localhost:5000/searchHLTB/${gameName}`;
+
+  console.log(gameName);
+  try {
+    const response = await fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+    });
+
+    if (response.ok) {
+      const json = await response.json();
+     
+      const game = json.find((game: any) => game.game_name === gameName);
+
+      const obj = {
+        game_main: game.game_main,
+        game_extra: game.game_extra,
+        game_completionist: game.game_completionist,
+        company: game.profile_dev,
+        year: game.release_world,
+      };
+     
+      return obj;
+    } else {
+      console.error(
+        "Error fetching data:",
+        response.status,
+        response.statusText
+      );
+    }
+  } catch (error: any) {
+    console.error("Error during request:", error);
+  }
+
+  // Retorna algo significativo en caso de error o si no hay coincidencias
+  return null;
 };
 
 export const addReview = async (
@@ -61,7 +114,6 @@ export const addReview = async (
   reviewComments: string
 ) => {
   const ADD_REVIEW = "juegos/review";
-console.log(gameId)
   const data = { gameId, rate, reviewName, reviewComments };
 
   try {
@@ -71,9 +123,8 @@ console.log(gameId)
       },
       method: "POST",
       body: JSON.stringify(data),
-
     });
-    console.log(response.ok)
+    console.log(response.ok);
     return response.ok;
   } catch (error) {
     return error;

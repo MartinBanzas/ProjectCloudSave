@@ -27,6 +27,12 @@ public class Juego {
     @Column(name= "titulo_review", columnDefinition = "TEXT") private String tituloReview;
     @Column(name="review", columnDefinition = "TEXT") private String review;
     @Column(name="img_Path") private String imgPath;
+    @Column(name="main") private String main;
+    @Column(name="main_extra") private String main_extra;
+    @Column(name="completionist") private String completionist;
+    @Column(name="company") private String company;
+    @Column(name="year") private String year;
+
    // @JsonIgnore @OneToMany(fetch = FetchType.LAZY,mappedBy = "juego", cascade={CascadeType.ALL}) private List<Partida> listaPartidas;
 
     public Juego(String name, String sistema, String directorio) {

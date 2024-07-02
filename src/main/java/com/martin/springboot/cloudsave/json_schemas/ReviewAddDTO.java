@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ReviewAddDTO {
 
-
     private int gameId;
     private int rate;
     private String reviewName;

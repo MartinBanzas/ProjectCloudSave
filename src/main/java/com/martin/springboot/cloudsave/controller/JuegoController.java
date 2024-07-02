@@ -97,9 +97,13 @@ public class JuegoController {
 
 		Juego gameToAdd = new Juego();
 		gameToAdd.setName(game.getName());
-		gameToAdd.setDirectorio(game.getDirectorio());
 		gameToAdd.setSistema(game.getSistema());
-
+		gameToAdd.setCompany(game.getCompany());
+		gameToAdd.setYear(game.getYear());
+		gameToAdd.setMain(game.getMain());
+		gameToAdd.setMain_extra(game.getMain_extra());
+		gameToAdd.setCompletionist(game.getCompletionist());
+		System.out.println(gameToAdd.getYear() + gameToAdd.getCompany() + gameToAdd.getCompletionist());
 		juegoService.save(gameToAdd);
 
 		return ResponseEntity.ok(gameToAdd);
@@ -111,11 +115,6 @@ public class JuegoController {
 	public String listaPartidas(@PathVariable("id") int id, Model theModel) {
 
 		Juego theGame = juegoService.findById(id);
-
-
-
-
-
 		return "juegos/partidas";
 	}
 	/*

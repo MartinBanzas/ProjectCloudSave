@@ -89,8 +89,7 @@ export const GameList = () => {
           </div>
         ))}
       </div>
-      {selectedGameInfo ? <GameInfo gameInfo={selectedGameInfo!} setShowModal={setGameInfoModal} showModal={gameInfoModal}/> : null }
-      
+      {selectedGameInfo  ? <GameInfo gameInfo={selectedGameInfo!} setShowModal={setGameInfoModal} showModal={gameInfoModal}/> : null }
       <ModalReview gameId={selectedGameId!} modalReview={reviewModal} setModalReview={setReviewModal} />
     </div>
   );
