@@ -1,0 +1,27 @@
+.image-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Espacio entre las imágenes */
+  }
+  
+  .image-grid img {
+    flex: 1 1 calc(33.333% - 10px); /* 3 imágenes por fila */
+    max-width: calc(33.333% - 10px);
+    object-fit: cover;
+  }
+
+  .modal-dialog {
+    max-width: 80%; /* Ajusta este valor según sea necesario */
+  }
+  
+  .image-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Espacio entre las imágenes */
+  }
+  
+  .image-grid img {
+    flex: 1 1 calc(16.666% - 10px); /* 6 imágenes por fila */
+    max-width: calc(16.666% - 10px);
+    object-fit: cover;
+  }

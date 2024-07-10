@@ -1,4 +1,4 @@
-import GameModel from "../../../models/Models";
+import GameModel from "../../../models/GameModel";
 import React from "react";
 import { Modal } from "react-bootstrap";
 import "../css/GameInfo.css"; // Asegúrate de importar el archivo CSS

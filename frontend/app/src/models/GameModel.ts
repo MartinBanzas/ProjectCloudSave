@@ -39,4 +39,4 @@ class GameModel {
         
 }
 
-export default GameModel
+export default GameModel;

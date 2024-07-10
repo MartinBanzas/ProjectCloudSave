@@ -3,3 +3,4 @@
 /target/
 /target/
 /resources/
+python_microservice/__pycache__/*

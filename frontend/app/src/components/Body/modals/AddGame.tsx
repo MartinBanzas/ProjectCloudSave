@@ -1,33 +1,31 @@
-import React, { useState } from "react"
-import { Modal } from "react-bootstrap"
+import React, { useState } from "react";
+import { Modal } from "react-bootstrap";
 import { addGame, hltbRequest } from "../../../requests/Requests";
 
 interface AddGameProps {
-    addGameModal: boolean | undefined;
-    setAddGameModal: React.Dispatch<React.SetStateAction<boolean>>;
+  addGameModal: boolean | undefined;
+  setAddGameModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const AddGame: React.FC<AddGameProps> = ({addGameModal, setAddGameModal}) => {
+export const AddGame: React.FC<AddGameProps> = ({
+  addGameModal,
+  setAddGameModal,
+}) => {
+  const [gameName, setGameName] = useState("");
+  const [system, setSystem] = useState("");
 
-    const [gameName, setGameName]=useState("")
-    const [system, setSystem]=useState("")
-
-
-    const handleSubmit = async () => {
-
-
-    const hltb = await hltbRequest(gameName)   
-    console.log(hltb) 
+  const handleSubmit = async () => {
+    const hltb = await hltbRequest(gameName);
+    console.log(hltb);
     const success = await addGame(gameName, system, hltb);
 
     if (success) {
-        setAddGameModal(false);
+      setAddGameModal(false);
     }
-        
-    }
+  };
 
-    return (
-        <Modal show={addGameModal} onHide={() => setAddGameModal(false)}>
+  return (
+    <Modal show={addGameModal} onHide={() => setAddGameModal(false)}>
       <Modal.Header closeButton className="modal-header">
         <h5 className="modal-title" id="reviewModalLabel">
           Añadir juego
@@ -45,7 +43,7 @@ export const AddGame: React.FC<AddGameProps> = ({addGameModal, setAddGameModal})
               name="gameName"
               id="reviewName"
               placeholder="Introduce el nombre del juego"
-              onChange={(event)=>setGameName(event.target.value)}
+              onChange={(event) => setGameName(event.target.value)}
               required
             />
           </div>
@@ -58,13 +56,12 @@ export const AddGame: React.FC<AddGameProps> = ({addGameModal, setAddGameModal})
               className="form-control"
               name="reviewComments"
               id="reviewComments"
-              
               placeholder="Introduce el sistema"
-              onChange={(event)=>setSystem(event.target.value)}
+              onChange={(event) => setSystem(event.target.value)}
               required
             />
           </div>
-          
+
           <button type="submit" className="btn btn-primary">
             Guardar
           </button>
@@ -77,6 +74,6 @@ export const AddGame: React.FC<AddGameProps> = ({addGameModal, setAddGameModal})
           </button>
         </form>
       </Modal.Body>
-    </Modal> 
-    )
-}
+    </Modal>
+  );
+};

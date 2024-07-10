@@ -22,6 +22,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -32,7 +33,8 @@ import java.util.stream.IntStream;
 public class JuegoController {
 
 	@Autowired
-	private JuegoService juegoService;	@Autowired
+	private JuegoService juegoService;
+	@Autowired
 	private FileStorageService storageService;
 
 	// Recupera una página de juegos en lugar de una lista, rémora de cuando el proyecto servía plantillas HTML
@@ -72,41 +74,40 @@ public class JuegoController {
 	}
 
 
-
 	@Operation(summary = "Get a list of games", description = "Returns the full list of games")
 	@GetMapping("/all")
-	  public ResponseEntity <List<Juego>> listJuegos() {
-
-		  Authentication authentication =
-				  SecurityContextHolder.getContext().getAuthentication();
-		  String username = authentication.getName();
-
-
-		  List<Juego> theGames = juegoService.findAll();
-		  Juego tempJuego = new Juego();
-
-
-		return ResponseEntity.ok().body(theGames);
+	public ResponseEntity<?> listJuegos() {
+		try {
+			List<Juego> theGames = juegoService.findAll();
+			return ResponseEntity.ok().body(theGames);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+	}
 
 
-	  }
+
+
 
 	@Operation(summary = "Basic POST to add a Game", description = "Adds a game with name, directory and system")
 	@PostMapping("/addGame")
-	public ResponseEntity <Juego> addGame(@RequestBody JuegoAddDTO game ) {
+	public ResponseEntity <?> addGame(@RequestBody JuegoAddDTO game ) {
 
-		Juego gameToAdd = new Juego();
-		gameToAdd.setName(game.getName());
-		gameToAdd.setSistema(game.getSistema());
-		gameToAdd.setCompany(game.getCompany());
-		gameToAdd.setYear(game.getYear());
-		gameToAdd.setMain(game.getMain());
-		gameToAdd.setMain_extra(game.getMain_extra());
-		gameToAdd.setCompletionist(game.getCompletionist());
-		System.out.println(gameToAdd.getYear() + gameToAdd.getCompany() + gameToAdd.getCompletionist());
-		juegoService.save(gameToAdd);
+		try {
+			Juego gameToAdd = new Juego();
+			gameToAdd.setName(game.getName());
+			gameToAdd.setSistema(game.getSistema());
+			gameToAdd.setCompany(game.getCompany());
+			gameToAdd.setYear(game.getYear());
+			gameToAdd.setMain(game.getMain());
+			gameToAdd.setMain_extra(game.getMain_extra());
+			gameToAdd.setCompletionist(game.getCompletionist());
+			juegoService.save(gameToAdd);
+			return ResponseEntity.ok(gameToAdd);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
 
-		return ResponseEntity.ok(gameToAdd);
 	}
 
 	// Obtener la lista de partidas.
@@ -133,42 +134,52 @@ public class JuegoController {
 	@Operation(summary = "Updates a game's basic parameters", description = "Updates name, system, directory")
 	@PatchMapping("update/{id}")
 	@Transactional
-	public ResponseEntity <String> updateJuego(@PathVariable("id") int id, @RequestParam("name") String name,
+	public ResponseEntity <?> updateJuego(@PathVariable("id") int id, @RequestParam("name") String name,
 			@RequestParam("sistema") String sistema, @RequestParam("directorio") String directorio) {
 
-		Juego theGame = juegoService.findById(id);
-		theGame.setName(name);
-		theGame.setDirectorio(directorio);
-		theGame.setSistema(sistema);
-		juegoService.save(theGame);
+		try {
+			Juego theGame = juegoService.findById(id);
+			theGame.setName(name);
+			theGame.setDirectorio(directorio);
+			theGame.setSistema(sistema);
+			juegoService.save(theGame);
+			return ResponseEntity.ok("Game updated successfully");
 
-		return ResponseEntity.ok("Game updated successfully");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
 	}
+
 
 	@Operation(summary = "Deletes a game", description = "Deletes a game by ID")
 	@PostMapping("/delete/{id}")
 	@Transactional
 	public ResponseEntity <String> deleteJuego(@PathVariable("id") int id) {
 
-		Juego juego = juegoService.findById(id);
+		try {
 
-		if (juego != null) {
-			//List<Partida> partidas = juego.getListaPartidas();
+			Juego juego = juegoService.findById(id);
 
-			//for (Partida partida : partidas) {
-			//	storageService.delete(partida.getRutaarchivo());
-			//}
+			if (juego != null) {
+				//List<Partida> partidas = juego.getListaPartidas();
 
-			 // Hay que tratar los nulos o romperá al intentar borrar un juego que no tenga
-								// imagen asociada, al ser null.
+				//for (Partida partida : partidas) {
+				//	storageService.delete(partida.getRutaarchivo());
+				//}
+
+				// Hay que tratar los nulos o romperá al intentar borrar un juego que no tenga
+				// imagen asociada, al ser null.
 				String rutaImg = juego.getImgPath();
 				storageService.deleteImg(rutaImg);
 
-			juegoService.deleteById(id);
+				juegoService.deleteById(id);
 
+			}
+			return ResponseEntity.ok("Game deleted successfully");
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
-		return ResponseEntity.ok("Game deleted successfully");
-
 	}
 
 	@Operation(summary = "Searches for a game", description = "Performs search by title ignoring Case")

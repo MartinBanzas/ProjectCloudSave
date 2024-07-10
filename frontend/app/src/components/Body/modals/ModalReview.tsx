@@ -31,10 +31,10 @@ export const ModalReview: React.FC<ModalReviewProps> = ({ modalReview, setModalR
     console.log(review);
     const success = await addReview(gameId, review.rate, review.reviewName, review.reviewComments);
     if (success) {
-      // handle success, e.g., close modal or show success message
+     
       setModalReview(false);
     } else {
-      // handle error, e.g., show error message
+     
     }
   };
 

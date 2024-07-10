@@ -1,26 +1,26 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { getGames as getGamesFromAPI, getImg } from "../../requests/Requests";
-import GameModel from "../../models/Models";
+import GameModel from "../../models/GameModel";
 import "./css/GameList.css";
-import star from "../../static/icons/star.svg"
-import placeholder from "../../../src/static/img/placeholder.png"
+import star from "../../static/icons/star.svg";
+import placeholder from "../../../src/static/img/placeholder.png";
 
 import { ModalReview } from "./modals/ModalReview";
 import { GameInfo } from "./modals/GameInfo";
-
+import { AddImage } from "./modals/AddImage";
 
 export const GameList = () => {
   const [games, setGames] = useState<GameModel[]>([]);
   const [gamesImg, setGamesImg] = useState<{ [key: number]: string }>({});
-  const [reviewModal, setReviewModal]= useState<boolean>(false)
-  const [gameInfoModal, setGameInfoModal]= useState<boolean>(false)
-  const [selectedGameId, setSelectedGameId]=useState<number>();
-  const [selectedGameInfo, setSelectedGameInfo]=useState<GameModel>();
+  const [reviewModal, setReviewModal] = useState<boolean>(false);
+  const [addImageModal, setAddImageModal] = useState<boolean>(false);
+  const [gameInfoModal, setGameInfoModal] = useState<boolean>(false);
+  const [selectedGameId, setSelectedGameId] = useState<number>();
+  const [selectedGameInfo, setSelectedGameInfo] = useState<GameModel>();
 
   const obtainGameListCallback = useCallback(async () => {
     const data = await getGamesFromAPI();
     setGames(data);
-   
   }, []);
 
   useEffect(() => {
@@ -39,22 +39,29 @@ export const GameList = () => {
   }, [games]);
 
   useEffect(() => {
-
     if (games.length > 0) {
       obtainImagesCallback();
     }
   }, [games, obtainImagesCallback]);
 
-
-  const handleClick = (gameId: number, event: React.MouseEvent<HTMLButtonElement | HTMLImageElement>) => {
-    setSelectedGameId(gameId)
+  const handleClick = (
+    gameId: number,
+    event: React.MouseEvent<HTMLButtonElement | HTMLImageElement>
+  ) => {
+    setSelectedGameId(gameId);
+    console.log(gameId);
     const gameInfo = games.find((game) => game.id === gameId);
     setSelectedGameInfo(gameInfo);
-    event?.currentTarget.id==="review" ? setReviewModal(true) : setGameInfoModal(true)
-  }
+    if (event?.currentTarget.id === "review") {
+      setReviewModal(true);
+    } else if (gamesImg[selectedGameId!]) {
+      setGameInfoModal(true);
+    } else {
+      setAddImageModal(true);
+    }
+  };
 
   return (
-    
     <div className="container">
       <div className="row">
         {games.map((game) => (
@@ -64,24 +71,38 @@ export const GameList = () => {
           >
             <div className="card border-dark game-card">
               <img
-              onClick={(event) =>handleClick(game.id, event)}
+                onClick={(event) => handleClick(game.id, event)}
                 src={
-                  gamesImg[game.id] != null
-                    ? gamesImg[game.id]
-                    : placeholder
+                  gamesImg[game.id] != null ? gamesImg[game.id] : placeholder
                 }
                 alt={game.name}
                 className="card-img-top game-img img-fluid"
               />
-              <div className="card-body ">
+              <div className="card-body">
                 {game.terminado ? <div className="band">Done!</div> : null}
-                <span onClick={()=>setGameInfoModal(true)} className="game-name mb-2">{game.name}</span>
+                <span
+                  onClick={() => setGameInfoModal(true)}
+                  className="game-name mb-2"
+                >
+                  {game.name}
+                </span>
                 <div className="card-footer">
                   <div className="buttonYreview">
-                  <button id="review" onClick={(event) => handleClick(game.id, event)} className="btn btn text-dark small review-button">
-                    <img src={star} className="starIcon" height="16px" width="16px"></img>
+                    <button
+                      id="review"
+                      onClick={(event) => handleClick(game.id, event)}
+                      className="btn btn text-dark small review-button"
+                    >
+                      <img
+                        src={star}
+                        className="starIcon"
+                        height="16px"
+                        width="16px"
+                      ></img>
                     </button>
-                    <span className="puntuacion text-white">{game.puntuacion}</span>
+                    <span className="puntuacion text-white">
+                      {game.puntuacion}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -89,8 +110,26 @@ export const GameList = () => {
           </div>
         ))}
       </div>
-      {selectedGameInfo  ? <GameInfo gameInfo={selectedGameInfo!} setShowModal={setGameInfoModal} showModal={gameInfoModal}/> : null }
-      <ModalReview gameId={selectedGameId!} modalReview={reviewModal} setModalReview={setReviewModal} />
+      {games[selectedGameId!] ? (
+        <GameInfo
+          gameInfo={selectedGameInfo!}
+          setShowModal={setGameInfoModal}
+          showModal={gameInfoModal}
+        />
+      ) : (
+        selectedGameInfo && (
+          <AddImage
+            addImageModal={addImageModal}
+            setAddImageModal={setAddImageModal}
+            gameInfo={selectedGameInfo!}
+          />
+        )
+      )}
+      <ModalReview
+        gameId={selectedGameId!}
+        modalReview={reviewModal}
+        setModalReview={setReviewModal}
+      />
     </div>
   );
 };

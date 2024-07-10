@@ -42,9 +42,6 @@ export const addGame = async (name: string, sistema: string, hltb: any) => {
     year: hltb.year,
     company: hltb.company,
   };
-
-  console.log(data);
-
   try {
     const response = await fetch(`${API_BASE_URL}${ADD_GAME}`, {
       headers: {
@@ -80,7 +77,7 @@ export const hltbRequest = async (gameName: string) => {
 
     if (response.ok) {
       const json = await response.json();
-     
+
       const game = json.find((game: any) => game.game_name === gameName);
 
       const obj = {
@@ -90,7 +87,7 @@ export const hltbRequest = async (gameName: string) => {
         company: game.profile_dev,
         year: game.release_world,
       };
-     
+
       return obj;
     } else {
       console.error(
@@ -177,6 +174,22 @@ export const searchGame = async (nombre: string) => {
         method: "GET",
       }
     );
+    return response.json();
+  } catch (error) {
+    return error;
+  }
+};
+
+export const searchGrids = async (game: string) => {
+  const URL = `http://localhost:5000/searchSG_with_steam_game_id/${game}`;
+
+  try {
+    const response = await fetch(URL, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
     return response.json();
   } catch (error) {
     return error;
